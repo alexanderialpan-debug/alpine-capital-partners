@@ -1,38 +1,72 @@
 body {
   margin: 0;
+  font-family: Arial;
   background: #050505;
   color: white;
-  font-family: Arial, sans-serif;
-  text-align: center;
 }
 
-h1 {
-  color: #d7a947;
-  font-size: 64px;
-  margin-top: 80px;
-}
-
-h2 {
-  color: #d7a947;
-  margin-top: 60px;
-}
-
-p {
-  color: #ccc;
-  font-size: 18px;
-}
-
-.container {
-  max-width: 900px;
-  margin: auto;
-  padding: 40px;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px;
+  border-bottom: 1px solid #333;
 }
 
 .logo {
-  width: 200px;
-  margin: 40px auto;
+  color: #d7a947;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.menu a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+}
+
+.hero {
+  height: 400px;
+  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)),
+  url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab');
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero h1 {
+  color: #d7a947;
+  font-size: 48px;
+}
+
+.sub {
+  color: #ccc;
 }
 
 .section {
-  margin-top: 60px;
+  padding: 60px 40px;
+  text-align: center;
+}
+
+.section h2 {
+  color: #d7a947;
+  margin-bottom: 30px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.card {
+  padding: 30px;
+  border: 1px solid #333;
+  background: #111;
+}
+
+.founder img {
+  width: 150px;
+  margin: 20px 0;
 }
