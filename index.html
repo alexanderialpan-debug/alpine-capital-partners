@@ -1,206 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alpine Capital Partners</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#050505;color:white;font-family:Inter,Arial,sans-serif}
-h1,h2{font-family:"Cormorant Garamond",serif;margin:0}
-p{color:#cfcfcf;line-height:1.7}
-a{text-decoration:none;color:inherit}
-.gold{color:#d7a947;text-transform:uppercase;letter-spacing:3px;font-size:13px;font-weight:700}
+body {
+  margin:0;
+  font-family:Arial;
+  background:black;
+  color:white;
+}
 
-header{position:fixed;top:0;width:100%;height:78px;z-index:99;background:rgba(0,0,0,.85);border-bottom:1px solid rgba(215,169,71,.35);display:flex;align-items:center;justify-content:space-between;padding:0 55px}
-.logo{display:flex;align-items:center;gap:15px;color:#d7a947;font-weight:700;letter-spacing:2px}
-.logo img{height:48px;width:80px;object-fit:cover}
-nav a{margin-left:25px;font-size:12px;text-transform:uppercase;color:#ddd}
-nav a:hover{color:#d7a947}
-.navbtn{border:1px solid #d7a947;color:#d7a947;padding:12px 20px;font-size:12px;text-transform:uppercase}
+nav {
+  position:fixed;
+  top:0;
+  width:100%;
+  background:black;
+  padding:15px;
+  text-align:center;
+}
 
-.hero{min-height:100vh;display:flex;align-items:center;padding:130px 70px 70px;background:linear-gradient(90deg,#050505 0%,rgba(0,0,0,.75) 45%,rgba(0,0,0,.25)),url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=85") center/cover}
-.hero h1{font-size:88px;line-height:.9;margin:20px 0}
-.hero p{font-size:20px;max-width:590px}
-.buttons{display:flex;gap:18px;margin-top:30px}
-.btn{padding:16px 30px;text-transform:uppercase;font-weight:700;font-size:13px}
-.goldbtn{background:linear-gradient(135deg,#f3d58a,#d7a947);color:black}
-.outline{border:1px solid #d7a947;color:white}
+nav a {
+  color:#d7a947;
+  margin:0 15px;
+  text-decoration:none;
+  cursor:pointer;
+}
 
-.strip{display:grid;grid-template-columns:repeat(4,1fr);background:#090909;border-top:1px solid rgba(215,169,71,.35);border-bottom:1px solid rgba(215,169,71,.35)}
-.strip div{padding:40px;border-right:1px solid #222}
-.strip h3{color:#d7a947;text-transform:uppercase;font-size:14px}
+section {
+  padding:100px 20px;
+  text-align:center;
+}
 
-.split{display:grid;grid-template-columns:42% 58%;min-height:520px}
-.splittext{padding:90px 70px;background:#090909}
-.splittext h2{font-size:50px;margin:15px 0}
-.splitimg{background:url("https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1400&q=85") center/cover}
-
-.section{padding:95px 70px;text-align:center}
-.section h2{font-size:48px;margin:15px 0 45px}
-.dark{background:#080808;border-top:1px solid rgba(215,169,71,.35);border-bottom:1px solid rgba(215,169,71,.35)}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
-.card{background:linear-gradient(145deg,#111,#070707);border:1px solid rgba(215,169,71,.28);padding:35px 25px;min-height:190px}
-.card h3{color:#d7a947;text-transform:uppercase;font-size:14px}
-
-.portfolio{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
-.property{background:#101010;border:1px solid #222;text-align:left;overflow:hidden}
-.property img{width:100%;height:220px;object-fit:cover}
-.property h3,.property p,.property span{margin-left:20px;margin-right:20px}
-.property span{color:#25d366;display:block;margin-bottom:22px}
-
-.portal{display:grid;grid-template-columns:45% 55%;gap:35px;padding:95px 70px;background:linear-gradient(90deg,rgba(0,0,0,.9),rgba(0,0,0,.7)),url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=85") center/cover;border-top:1px solid rgba(215,169,71,.35)}
-.portalbox{background:rgba(10,10,10,.88);border:1px solid rgba(215,169,71,.35);padding:35px}
-input,textarea{width:100%;padding:15px;margin:10px 0;background:#090909;border:1px solid #333;color:white}
-button{width:100%;padding:15px;margin-top:12px;background:linear-gradient(135deg,#f3d58a,#d7a947);border:0;font-weight:800;text-transform:uppercase}
-
-.founder{display:grid;grid-template-columns:32% 68%;background:#080808;border-top:1px solid rgba(215,169,71,.35)}
-.founderphoto{height:360px;background:#111}
-.founderphoto img{width:100%;height:100%;object-fit:cover;object-position:center top}
-.foundertext{padding:70px}
-.foundertext h2{font-size:48px}
-.quote{color:#d7a947;font-style:italic}
-
-.contact{display:grid;grid-template-columns:40% 60%;gap:50px;padding:95px 70px;background:#060606}
-textarea{height:150px}
-footer{text-align:center;padding:45px;background:#030303;border-top:1px solid rgba(215,169,71,.35)}
-footer h3{color:#d7a947}
-
-@media(max-width:900px){
-header{padding:0 20px}nav,.navbtn{display:none}
-.hero{padding:120px 25px}.hero h1{font-size:55px}
-.strip,.split,.cards,.portfolio,.portal,.founder,.contact{grid-template-columns:1fr}
-.section,.splittext,.portal,.contact,.foundertext{padding:60px 25px}
+button {
+  background:#d7a947;
+  border:none;
+  padding:10px 20px;
+  cursor:pointer;
 }
 </style>
+
 </head>
 
 <body>
 
-<header>
-  <div class="logo">
-    <img src="logo.jpg">
-    <span>ALPINE CAPITAL</span>
-  </div>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About Us</a>
-    <a href="#strategy">Strategy</a>
-    <a href="#portfolio">Portfolio</a>
-    <a href="#portal">Investor Portal</a>
-    <a href="#contact">Contact</a>
-  </nav>
-  <a class="navbtn" href="#portal">Investor Access</a>
-</header>
+<!-- NAV -->
+<nav>
+  <a onclick="show('home')">Home</a>
+  <a onclick="show('about')">About</a>
+  <a onclick="show('strategy')">Strategy</a>
+  <a onclick="show('portfolio')">Portfolio</a>
+  <a onclick="show('contact')">Contact</a>
+  <a onclick="show('login')">Investor Portal</a>
+</nav>
 
-<section id="home" class="hero">
-  <div>
-    <p class="gold">Private Real Estate Investment Firm</p>
-    <h1>Alpine<br>Capital Partners</h1>
-    <p>Creating long-term wealth through real assets, strong structure, and consistent execution.</p>
-    <div class="buttons">
-      <a class="btn goldbtn" href="#portal">Investor Access</a>
-      <a class="btn outline" href="#portfolio">View Opportunities</a>
-    </div>
-  </div>
+<!-- HOME -->
+<section id="home">
+  <h1 style="color:#d7a947;">Alpine Capital Partners</h1>
+  <p>Private Real Estate Investment Firm</p>
 </section>
 
-<section class="strip">
-  <div><h3>Disciplined Strategy</h3><p>Focused on sustainable value creation.</p></div>
-  <div><h3>Real Assets</h3><p>Investing in high-quality real estate.</p></div>
-  <div><h3>Strong Structure</h3><p>Built on transparency, security, and alignment.</p></div>
-  <div><h3>Long-Term Growth</h3><p>Committed to long-term growth and professional execution.</p></div>
+<!-- ABOUT -->
+<section id="about" style="display:none;">
+  <h2 style="color:#d7a947;">About Us</h2>
+  <p>We acquire and manage high-quality real estate assets.</p>
 </section>
 
-<section id="about" class="split">
-  <div class="splittext">
-    <p class="gold">About Alpine Capital Partners</p>
-    <h2>Building Value.<br>Delivering Growth.</h2>
-    <p>Alpine Capital Partners is a private real estate investment company focused on identifying, structuring, and managing real asset opportunities.</p>
-    <p>Our approach is built on disciplined analysis, strong financial structure, and long-term value creation.</p>
-    <p>We are building a platform designed for trust, transparency, and professional execution.</p>
-  </div>
-  <div class="splitimg"></div>
+<!-- STRATEGY -->
+<section id="strategy" style="display:none;">
+  <h2 style="color:#d7a947;">Investment Strategy</h2>
+  <p>Acquisition | Asset Management | Value Creation</p>
 </section>
 
-<section id="strategy" class="section dark">
-  <p class="gold">Our Strategy</p>
-  <h2>A disciplined approach to real estate investment.</h2>
-  <div class="cards">
-    <div class="card"><h3>Acquisition</h3><p>Identifying quality assets in strong locations with long-term potential.</p></div>
-    <div class="card"><h3>Asset Management</h3><p>Managing assets with focus on stability, performance, and risk control.</p></div>
-    <div class="card"><h3>Value Creation</h3><p>Improving assets through strategic planning and operational discipline.</p></div>
-    <div class="card"><h3>Capital Growth</h3><p>Building long-term growth through structure, patience, and execution.</p></div>
-  </div>
+<!-- PORTFOLIO -->
+<section id="portfolio" style="display:none;">
+  <h2 style="color:#d7a947;">Portfolio</h2>
+  <p>Commercial | Residential | Mixed Use</p>
 </section>
 
-<section id="portfolio" class="section">
-  <p class="gold">Portfolio Vision</p>
-  <h2>Real Assets. Real Value. Real Growth.</h2>
-  <div class="portfolio">
-    <div class="property"><img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=900&q=85"><h3>Commercial Assets</h3><p>Future acquisition focus</p><span>Pipeline</span></div>
-    <div class="property"><img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=85"><h3>Office Buildings</h3><p>Long-term income potential</p><span>Pipeline</span></div>
-    <div class="property"><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=900&q=85"><h3>Residential Projects</h3><p>Growth-focused opportunities</p><span>Pipeline</span></div>
-    <div class="property"><img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=900&q=85"><h3>Mixed-Use Assets</h3><p>Strategic real estate potential</p><span>Pipeline</span></div>
-  </div>
+<!-- CONTACT -->
+<section id="contact" style="display:none;">
+  <h2 style="color:#d7a947;">Contact</h2>
+  <p>Melbourne, Australia</p>
 </section>
 
-<section id="portal" class="portal">
-  <div>
-    <p class="gold">Investor Portal</p>
-    <h2>Secure investor access coming soon.</h2>
-    <p>The investor portal will provide future access to investor documents, opportunity updates, communication, and account-related information.</p>
-    <p>No investor balances or returns are displayed until real investments are formally active.</p>
-  </div>
-
-  <div class="portalbox">
-    <h2>Register Interest</h2>
-    <p>Leave your details to receive future updates.</p>
-    <input placeholder="Full Name">
-    <input placeholder="Email Address">
-    <input placeholder="Phone Number">
-    <button>Register Interest</button>
-  </div>
+<!-- LOGIN -->
+<section id="login" style="display:none;">
+  <h2>Investor Login</h2>
+  <input id="email" placeholder="Email"><br><br>
+  <input id="password" type="password" placeholder="Password"><br><br>
+  <button onclick="login()">Login</button>
 </section>
 
-<section class="founder">
-  <div class="founderphoto">
-    <img src="alex.jpg">
-  </div>
-  <div class="foundertext">
-    <p class="gold">Founder & CEO</p>
-    <h2>Alexander Alpan</h2>
-    <p>Building a disciplined investment platform focused on long-term growth, structure, and execution.</p>
-    <p class="quote">“Creating long-term wealth through real assets, strong structure, and consistent execution.”</p>
-  </div>
+<!-- DASHBOARD -->
+<section id="dashboard" style="display:none;">
+  <h2>Investor Dashboard</h2>
+  <p id="userEmail"></p>
+
+  <p>Total Investment: $250,000</p>
+  <p>Current Value: $287,500</p>
+
+  <button onclick="logout()">Logout</button>
 </section>
 
-<section id="contact" class="contact">
-  <div>
-    <p class="gold">Contact</p>
-    <h2>Get In Touch</h2>
-    <p>We welcome inquiries from investors, partners, and professionals.</p>
-    <p>Phone: 0433 638 491</p>
-    <p>Location: Melbourne, Australia</p>
-  </div>
-  <form>
-    <input placeholder="Your Name">
-    <input placeholder="Email Address">
-    <input placeholder="Subject">
-    <textarea placeholder="Message"></textarea>
-    <button type="button">Send Message</button>
-  </form>
-</section>
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 
-<footer>
-  <h3>Alpine Capital Partners</h3>
-  <p>Chairman/CEO – Alexander Alpan</p>
-  <p>Melbourne, Australia | 0433 638 491</p>
-  <p>© 2026 Alpine Capital Partners. All Rights Reserved.</p>
-</footer>
+const firebaseConfig = {
+  apiKey: "AIzaSyDplPf7cJQ9wK7FHM2NGexjNQegH1IPYHk",
+  authDomain: "alpine-capital-partners.firebaseapp.com",
+  projectId: "alpine-capital-partners",
+  storageBucket: "alpine-capital-partners.firebasestorage.app",
+  messagingSenderId: "369382075896",
+  appId: "1:369382075896:web:79af780ff267c0f335fa0d"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.login = function() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      document.getElementById("login").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+      document.getElementById("userEmail").innerText = userCredential.user.email;
+    })
+    .catch(() => {
+      alert("Access denied");
+    });
+}
+
+window.logout = function() {
+  signOut(auth).then(() => {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("login").style.display = "block";
+  });
+}
+</script>
+
+<!-- NAVIGATION SCRIPT -->
+<script>
+function show(id){
+  document.querySelectorAll("section").forEach(s => s.style.display="none");
+  document.getElementById(id).style.display="block";
+}
+</script>
 
 </body>
 </html>
