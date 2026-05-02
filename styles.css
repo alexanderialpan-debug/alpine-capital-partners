@@ -1,72 +1,139 @@
 body {
   margin: 0;
-  font-family: Arial;
-  background: #050505;
-  color: white;
+  background: #040404;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
 }
 
+/* NAVBAR */
 .navbar {
   display: flex;
   justify-content: space-between;
-  padding: 20px 40px;
-  border-bottom: 1px solid #333;
+  padding: 25px 80px;
+  position: fixed;
+  width: 100%;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
 }
 
 .logo {
+  font-family: 'Playfair Display', serif;
   color: #d7a947;
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 22px;
 }
 
 .menu a {
-  color: white;
-  margin-left: 20px;
+  color: #ccc;
+  margin-left: 30px;
   text-decoration: none;
+  font-size: 14px;
 }
 
+.menu a:hover {
+  color: #d7a947;
+}
+
+/* HERO */
 .hero {
-  height: 400px;
-  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)),
+  height: 100vh;
+  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.95)),
   url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab');
   background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+  padding: 0 20px;
 }
 
 .hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 70px;
   color: #d7a947;
-  font-size: 48px;
 }
 
-.sub {
+.subtitle {
+  margin-top: 10px;
   color: #ccc;
 }
 
+.desc {
+  max-width: 600px;
+  margin: 20px auto;
+  color: #aaa;
+}
+
+.btn {
+  margin-top: 20px;
+  padding: 12px 30px;
+  border: 1px solid #d7a947;
+  background: transparent;
+  color: #d7a947;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #d7a947;
+  color: black;
+}
+
+/* SECTIONS */
 .section {
-  padding: 60px 40px;
+  padding: 120px 80px;
   text-align: center;
 }
 
-.section h2 {
-  color: #d7a947;
-  margin-bottom: 30px;
+.section.dark {
+  background: #0a0a0a;
 }
 
-.cards {
+.section h2 {
+  font-family: 'Playfair Display', serif;
+  color: #d7a947;
+  margin-bottom: 40px;
+}
+
+.text {
+  max-width: 700px;
+  margin: auto;
+  color: #aaa;
+}
+
+/* GRID */
+.grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
 
 .card {
-  padding: 30px;
-  border: 1px solid #333;
+  padding: 50px;
   background: #111;
+  border: 1px solid #222;
+  transition: 0.3s;
 }
 
+.card:hover {
+  border-color: #d7a947;
+  transform: translateY(-5px);
+}
+
+/* FOUNDER */
 .founder img {
-  width: 150px;
+  width: 160px;
+  border-radius: 10px;
   margin: 20px 0;
+}
+
+.name {
+  font-weight: 500;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 40px;
+  border-top: 1px solid #222;
+  color: #777;
 }
