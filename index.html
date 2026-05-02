@@ -86,7 +86,8 @@ button{width:100%;padding:16px;margin-top:12px;background:linear-gradient(135deg
 
 .admin{display:none;margin-top:45px}
 .admin-card{background:#111;border:1px solid rgba(215,169,71,.35);padding:25px;margin-top:22px;text-align:left}
-.admin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.admin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:14px}
+.admin-grid-four{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-top:14px}
 
 .founder{display:grid;grid-template-columns:45% 55%;background:linear-gradient(135deg,#050505,#101010);border-top:1px solid rgba(215,169,71,.35)}
 .founder img{width:100%;height:680px;object-fit:cover;object-position:center top}
@@ -100,7 +101,7 @@ footer{text-align:center;padding:45px;border-top:1px solid rgba(215,169,71,.35);
 nav{display:none}
 header{padding:0 22px}
 .hero{padding:120px 28px}.hero h1{font-size:56px}
-.strip,.cards,.stats,.founder,.admin-grid,.transaction-row{grid-template-columns:1fr}
+.strip,.cards,.stats,.founder,.admin-grid,.admin-grid-four,.transaction-row{grid-template-columns:1fr}
 .section,.portal,.contact,.founder div{padding:65px 28px}
 }
 </style>
@@ -195,10 +196,7 @@ header{padding:0 22px}
 
     <div class="transactions">
       <h2>Transaction History</h2>
-      <div class="transaction-row"><span>Initial Capital Contribution</span><strong>$250,000</strong><small>Completed</small></div>
-      <div class="transaction-row"><span>Monthly Return Distribution</span><strong class="green">$3,750</strong><small>Paid</small></div>
-      <div class="transaction-row"><span>Management Fee</span><strong>-$750</strong><small>Processed</small></div>
-      <div class="transaction-row"><span>Upcoming Payment Due</span><strong>$5,250</strong><small>Pending</small></div>
+      <div id="transactionList"></div>
     </div>
 
     <canvas id="growthChart" style="margin-top:40px;"></canvas>
@@ -251,41 +249,91 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+
 const ADMIN_UID = "GiBsDVrlumWZcRXAmP7v7iDvsoE2";
 let chart;
 
-function money(value){return "$" + Number(value || 0).toLocaleString();}
+function money(value){
+  return "$" + Number(value || 0).toLocaleString();
+}
+
+function renderTransactions(data){
+  const transactionList = document.getElementById("transactionList");
+
+  const transactions = [
+    {
+      name: data.transaction1Name || "Initial Capital Contribution",
+      amount: data.transaction1Amount ?? 250000,
+      status: data.transaction1Status || "Completed"
+    },
+    {
+      name: data.transaction2Name || "Monthly Return Distribution",
+      amount: data.transaction2Amount ?? 3750,
+      status: data.transaction2Status || "Paid"
+    },
+    {
+      name: data.transaction3Name || "Management Fee",
+      amount: data.transaction3Amount ?? -750,
+      status: data.transaction3Status || "Processed"
+    },
+    {
+      name: data.transaction4Name || "Upcoming Payment Due",
+      amount: data.transaction4Amount ?? 5250,
+      status: data.transaction4Status || "Pending"
+    }
+  ];
+
+  transactionList.innerHTML = "";
+
+  transactions.forEach(t => {
+    transactionList.innerHTML += `
+      <div class="transaction-row">
+        <span>${t.name}</span>
+        <strong class="${Number(t.amount) > 0 ? 'green' : ''}">${money(t.amount)}</strong>
+        <small>${t.status}</small>
+      </div>
+    `;
+  });
+}
 
 async function loadInvestor(user){
   const snap = await getDoc(doc(db,"investors",user.uid));
 
   if(!snap.exists()){
-    document.getElementById("loginMessage").innerText="Account exists, but investor profile is not approved yet.";
+    document.getElementById("loginMessage").innerText = "Account exists, but investor profile is not approved yet.";
     await signOut(auth);
     return;
   }
 
   const data = snap.data();
 
-  document.getElementById("loginBox").style.display="none";
-  document.getElementById("dashboard").style.display="block";
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+  document.getElementById("adminPanel").style.display = "none";
 
-  document.getElementById("welcomeName").innerText="Welcome, " + (data.name || user.email);
-  document.getElementById("userEmail").innerText=user.email;
+  document.getElementById("welcomeName").innerText = "Welcome, " + (data.name || user.email);
+  document.getElementById("userEmail").innerText = user.email;
 
-  document.getElementById("totalInvestment").innerText=money(data.totalInvestment);
-  document.getElementById("currentValue").innerText=money(data.currentValue);
-  document.getElementById("totalReturns").innerText=money(data.totalReturns);
-  document.getElementById("paymentDue").innerText=money(data.paymentDue);
+  document.getElementById("totalInvestment").innerText = money(data.totalInvestment);
+  document.getElementById("currentValue").innerText = money(data.currentValue);
+  document.getElementById("totalReturns").innerText = money(data.totalReturns);
+  document.getElementById("paymentDue").innerText = money(data.paymentDue);
+
+  renderTransactions(data);
 
   if(chart) chart.destroy();
+
   chart = new Chart(document.getElementById("growthChart"),{
     type:"line",
     data:{
       labels:["Total Investment","Current Value","Total Returns"],
       datasets:[{
         label:"Portfolio Overview",
-        data:[Number(data.totalInvestment||0),Number(data.currentValue||0),Number(data.totalReturns||0)],
+        data:[
+          Number(data.totalInvestment || 0),
+          Number(data.currentValue || 0),
+          Number(data.totalReturns || 0)
+        ],
         borderColor:"#d7a947",
         backgroundColor:"rgba(215,169,71,.18)",
         fill:true,
@@ -301,31 +349,62 @@ async function loadInvestor(user){
     }
   });
 
-  if(user.uid===ADMIN_UID){
-    document.getElementById("adminPanel").style.display="block";
+  if(user.uid === ADMIN_UID){
+    document.getElementById("adminPanel").style.display = "block";
     loadAdminPanel();
+  } else {
+    document.getElementById("adminPanel").style.display = "none";
   }
 }
 
 async function loadAdminPanel(){
   const investorList = document.getElementById("investorList");
-  investorList.innerHTML="";
+  investorList.innerHTML = "";
+
   const q = await getDocs(collection(db,"investors"));
 
   q.forEach((docSnap)=>{
-    const d=docSnap.data();
-    const id=docSnap.id;
+    const d = docSnap.data();
+    const id = docSnap.id;
 
     investorList.innerHTML += `
       <div class="admin-card">
         <h3 class="gold">${d.name || "Investor"}</h3>
         <p>UID: ${id}</p>
-        <div class="admin-grid">
+
+        <div class="admin-grid-four">
           <div><label>Total Investment</label><input id="ti-${id}" value="${d.totalInvestment || 0}"></div>
           <div><label>Current Value</label><input id="cv-${id}" value="${d.currentValue || 0}"></div>
           <div><label>Total Returns</label><input id="tr-${id}" value="${d.totalReturns || 0}"></div>
           <div><label>Payment Due</label><input id="pd-${id}" value="${d.paymentDue || 0}"></div>
         </div>
+
+        <h3 class="gold" style="margin-top:30px;">Transaction Editor</h3>
+
+        <div class="admin-grid">
+          <div><label>Transaction 1 Name</label><input id="t1n-${id}" value="${d.transaction1Name || 'Initial Capital Contribution'}"></div>
+          <div><label>Amount</label><input id="t1a-${id}" value="${d.transaction1Amount ?? 250000}"></div>
+          <div><label>Status</label><input id="t1s-${id}" value="${d.transaction1Status || 'Completed'}"></div>
+        </div>
+
+        <div class="admin-grid">
+          <div><label>Transaction 2 Name</label><input id="t2n-${id}" value="${d.transaction2Name || 'Monthly Return Distribution'}"></div>
+          <div><label>Amount</label><input id="t2a-${id}" value="${d.transaction2Amount ?? 3750}"></div>
+          <div><label>Status</label><input id="t2s-${id}" value="${d.transaction2Status || 'Paid'}"></div>
+        </div>
+
+        <div class="admin-grid">
+          <div><label>Transaction 3 Name</label><input id="t3n-${id}" value="${d.transaction3Name || 'Management Fee'}"></div>
+          <div><label>Amount</label><input id="t3a-${id}" value="${d.transaction3Amount ?? -750}"></div>
+          <div><label>Status</label><input id="t3s-${id}" value="${d.transaction3Status || 'Processed'}"></div>
+        </div>
+
+        <div class="admin-grid">
+          <div><label>Transaction 4 Name</label><input id="t4n-${id}" value="${d.transaction4Name || 'Upcoming Payment Due'}"></div>
+          <div><label>Amount</label><input id="t4a-${id}" value="${d.transaction4Amount ?? 5250}"></div>
+          <div><label>Status</label><input id="t4s-${id}" value="${d.transaction4Status || 'Pending'}"></div>
+        </div>
+
         <button onclick="saveInvestor('${id}')">Save Changes</button>
       </div>
     `;
@@ -337,27 +416,58 @@ window.saveInvestor = async function(id){
     totalInvestment:Number(document.getElementById("ti-"+id).value),
     currentValue:Number(document.getElementById("cv-"+id).value),
     totalReturns:Number(document.getElementById("tr-"+id).value),
-    paymentDue:Number(document.getElementById("pd-"+id).value)
+    paymentDue:Number(document.getElementById("pd-"+id).value),
+
+    transaction1Name:document.getElementById("t1n-"+id).value,
+    transaction1Amount:Number(document.getElementById("t1a-"+id).value),
+    transaction1Status:document.getElementById("t1s-"+id).value,
+
+    transaction2Name:document.getElementById("t2n-"+id).value,
+    transaction2Amount:Number(document.getElementById("t2a-"+id).value),
+    transaction2Status:document.getElementById("t2s-"+id).value,
+
+    transaction3Name:document.getElementById("t3n-"+id).value,
+    transaction3Amount:Number(document.getElementById("t3a-"+id).value),
+    transaction3Status:document.getElementById("t3s-"+id).value,
+
+    transaction4Name:document.getElementById("t4n-"+id).value,
+    transaction4Amount:Number(document.getElementById("t4a-"+id).value),
+    transaction4Status:document.getElementById("t4s-"+id).value
   });
-  alert("Investor updated successfully");
+
+  alert("Investor and transaction history updated successfully");
 }
 
 window.login = async function(){
-  document.getElementById("loginMessage").innerText="";
+  document.getElementById("loginMessage").innerText = "";
+
   try{
-    await signInWithEmailAndPassword(auth,document.getElementById("email").value,document.getElementById("password").value);
+    await signInWithEmailAndPassword(
+      auth,
+      document.getElementById("email").value,
+      document.getElementById("password").value
+    );
   }catch{
-    document.getElementById("loginMessage").innerText="Access denied. Check email/password.";
+    document.getElementById("loginMessage").innerText = "Access denied. Check email/password.";
   }
 }
 
 window.logout = async function(){
   await signOut(auth);
-  document.getElementById("dashboard").style.display="none";
-  document.getElementById("loginBox").style.display="block";
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("loginBox").style.display = "block";
+  document.getElementById("adminPanel").style.display = "none";
 }
 
-onAuthStateChanged(auth,(user)=>{ if(user) loadInvestor(user); });
+onAuthStateChanged(auth,(user)=>{
+  if(user){
+    loadInvestor(user);
+  } else {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("loginBox").style.display = "block";
+    document.getElementById("adminPanel").style.display = "none";
+  }
+});
 
 const faders = document.querySelectorAll(".fade");
 const observer = new IntersectionObserver((entries)=>{
