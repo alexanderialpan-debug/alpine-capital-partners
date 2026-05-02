@@ -63,7 +63,8 @@ textarea{min-height:130px}
 .stat{background:#111;border:1px solid rgba(215,169,71,.3);padding:26px}
 .stat strong{display:block;font-size:30px;margin-top:10px}
 
-.transactions,.reports,.investor-notes,.lead-box,.kyc-box{margin-top:45px;background:#0b0b0b;border:1px solid rgba(215,169,71,.3);padding:30px;text-align:left}
+.transactions,.reports,.investor-notes,.lead-box,.kyc-box,.kyc-warning{margin-top:45px;background:#0b0b0b;border:1px solid rgba(215,169,71,.3);padding:30px;text-align:left}
+.kyc-warning{border-color:#9b6a1a;background:rgba(80,50,0,.25)}
 .transaction-row,.report-row,.lead-row{display:grid;grid-template-columns:1fr 160px 120px;gap:20px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.08)}
 .report-row{grid-template-columns:1fr 160px}
 .lead-row{grid-template-columns:1fr}
@@ -74,6 +75,8 @@ textarea{min-height:130px}
 .admin-card{background:#111;border:1px solid rgba(215,169,71,.35);padding:25px;margin-top:22px;text-align:left}
 .admin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:14px}
 .admin-grid-four{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-top:14px}
+
+.gated-section{display:none}
 
 .founder{display:grid;grid-template-columns:45% 55%;background:linear-gradient(135deg,#050505,#101010);border-top:1px solid rgba(215,169,71,.35)}
 .founder img{width:100%;height:680px;object-fit:cover;object-position:center top}
@@ -207,6 +210,11 @@ header{padding:0 22px}
       <div class="stat"><small>KYC Status</small><strong id="kycStatus">Not Submitted</strong></div>
     </div>
 
+    <div id="kycWarning" class="kyc-warning">
+      <h2>Verification Required</h2>
+      <p>Your account is currently limited. Please submit your passport or identity document. Review may take 3–5 business days. Once approved, your full investor dashboard, reports, and transaction history will unlock.</p>
+    </div>
+
     <div class="investor-notes">
       <h2>Investor Notes</h2>
       <p id="investorNotes">No notes available.</p>
@@ -214,18 +222,18 @@ header{padding:0 22px}
 
     <div class="kyc-box">
       <h2>Identity Verification</h2>
-      <p>Please upload a clear passport or identity document. Review may take 3–5 business days.</p>
-<input type="file" id="passportFile" accept="image/jpeg,image/png,application/pdf">
+      <p>Please upload a clear passport or identity document. JPG, PNG, or PDF only. Review may take 3–5 business days.</p>
+      <input type="file" id="passportFile" accept="image/jpeg,image/png,application/pdf">
       <button onclick="uploadPassport()">Submit Passport / ID</button>
       <p id="passportStatus"></p>
     </div>
 
-    <div class="transactions">
+    <div class="transactions gated-section">
       <h2>Transaction History</h2>
       <div id="transactionList"></div>
     </div>
 
-    <div class="reports">
+    <div class="reports gated-section">
       <h2>Documents & Reports</h2>
       <div class="report-row"><span>Investment Summary</span><a id="report1" target="_blank">View</a></div>
       <div class="report-row"><span>Monthly Statement</span><a id="report2" target="_blank">View</a></div>
@@ -233,7 +241,7 @@ header{padding:0 22px}
       <div class="report-row"><span>Agreement / Terms</span><a id="report4" target="_blank">View</a></div>
     </div>
 
-    <canvas id="growthChart" style="margin-top:40px;"></canvas>
+    <canvas id="growthChart" class="gated-section" style="margin-top:40px;"></canvas>
     <button onclick="logout()">Logout</button>
 
     <div id="adminPanel" class="admin">
@@ -344,6 +352,14 @@ function setupReport(id,link){
   else{el.href="#";el.classList.add("disabled");el.innerText="Not Uploaded";}
 }
 
+function applyKycLock(status){
+  const verified = status === "Verified";
+  document.querySelectorAll(".gated-section").forEach(el=>{
+    el.style.display = verified ? "block" : "none";
+  });
+  document.getElementById("kycWarning").style.display = verified ? "none" : "block";
+}
+
 function renderTransactions(data){
   const list=document.getElementById("transactionList");
   const tx=[
@@ -368,6 +384,8 @@ async function loadInvestor(user){
   }
 
   const d=snap.data();
+  const kyc = d.kycStatus || "Not Submitted";
+
   document.getElementById("loginBox").style.display="none";
   document.getElementById("dashboard").style.display="block";
   document.getElementById("adminPanel").style.display="none";
@@ -383,9 +401,10 @@ async function loadInvestor(user){
   document.getElementById("paymentDue").innerText=money(d.paymentDue);
   document.getElementById("returnPercent").innerText=percent(ti>0?(tr/ti)*100:0);
   document.getElementById("monthlyYield").innerText=percent(d.monthlyYield||0);
-  document.getElementById("kycStatus").innerText=d.kycStatus||"Not Submitted";
+  document.getElementById("kycStatus").innerText=kyc;
   document.getElementById("investorNotes").innerText=d.notes||"No notes available.";
 
+  applyKycLock(kyc);
   renderTransactions(d);
   setupReport("report1",d.report1);
   setupReport("report2",d.report2);
@@ -401,6 +420,8 @@ async function loadInvestor(user){
 
   if(user.uid===ADMIN_UID){
     document.getElementById("adminPanel").style.display="block";
+    document.querySelectorAll(".gated-section").forEach(el=>el.style.display="block");
+    document.getElementById("kycWarning").style.display="none";
     loadAdminPanel();
     loadLeads();
   }
@@ -436,6 +457,9 @@ async function loadAdminPanel(){
         <div class="admin-grid">
           <div style="grid-column:span 3;"><label>Notes</label><input id="notes-${id}" value="${d.notes||''}"></div>
         </div>
+
+        <button class="approve" onclick="quickKyc('${id}','Verified')">Approve KYC</button>
+        <button class="reject" onclick="quickKyc('${id}','Rejected')">Reject KYC</button>
 
         <h3 class="gold" style="margin-top:30px;">Transaction Editor</h3>
         ${[1,2,3,4].map(n=>`
@@ -481,10 +505,16 @@ async function loadLeads(){
 
         <button class="approve" onclick="approveLead('${s.id}')">Approve</button>
         <button class="reject" onclick="rejectLead('${s.id}')">Reject</button>
-        <button class="danger" onclick="deleteLead('${s.id}')">🗑 Delete</button>
+        <button class="danger" onclick="deleteLead('${s.id}')">Delete</button>
       </div>
     `;
   });
+}
+
+window.quickKyc=async function(id,status){
+  await updateDoc(doc(db,"investors",id),{kycStatus:status});
+  alert("KYC status updated to "+status);
+  loadAdminPanel();
 }
 
 window.approveLead=async function(id){
@@ -535,25 +565,40 @@ window.saveInvestor=async function(id){
 window.uploadPassport=async function(){
   const file=document.getElementById("passportFile").files[0];
   if(!file || !currentUser){
-    document.getElementById("passportStatus").innerText="Please select a file first.";
+    document.getElementById("passportStatus").innerText="Please select a JPG, PNG, or PDF file.";
+    return;
+  }
+
+  const allowedTypes=["image/jpeg","image/png","application/pdf"];
+  if(!allowedTypes.includes(file.type)){
+    document.getElementById("passportStatus").innerText="Only JPG, PNG, or PDF files are accepted.";
     return;
   }
 
   document.getElementById("passportStatus").innerText="Uploading securely...";
 
-  const fileRef=ref(storage,`kyc/${currentUser.uid}/${Date.now()}-${file.name}`);
-  await uploadBytes(fileRef,file);
-  const url=await getDownloadURL(fileRef);
+  try{
+    const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+    const fileRef=ref(storage,`kyc/${currentUser.uid}/${Date.now()}-${safeName}`);
 
-  await updateDoc(doc(db,"investors",currentUser.uid),{
-    passportUrl:url,
-    passportFileName:file.name,
-    kycStatus:"Submitted - Under Review",
-    kycSubmittedAt:serverTimestamp()
-  });
+    await uploadBytes(fileRef,file,{contentType:file.type});
+    const url=await getDownloadURL(fileRef);
 
-  document.getElementById("passportStatus").innerText="Submitted successfully. Review may take 3–5 business days.";
-  document.getElementById("kycStatus").innerText="Submitted - Under Review";
+    await updateDoc(doc(db,"investors",currentUser.uid),{
+      passportUrl:url,
+      passportFileName:safeName,
+      passportFileType:file.type,
+      kycStatus:"Submitted - Under Review",
+      kycSubmittedAt:serverTimestamp()
+    });
+
+    document.getElementById("passportStatus").innerText="Submitted successfully. Review may take 3–5 business days.";
+    document.getElementById("kycStatus").innerText="Submitted - Under Review";
+    applyKycLock("Submitted - Under Review");
+  }catch(error){
+    document.getElementById("passportStatus").innerText="Upload failed. Please check Firebase Storage rules.";
+    console.error(error);
+  }
 }
 
 window.submitLead=async function(){
