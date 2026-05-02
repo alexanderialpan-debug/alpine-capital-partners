@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Alpine Capital Partners</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -11,164 +10,65 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#050505;color:#fff;font-family:Inter,sans-serif}
+html{scroll-behavior:smooth}
+body{background:#050505;color:#fff;font-family:Inter,Arial,sans-serif}
+h1,h2,h3{font-family:"Cormorant Garamond",serif}
+p{color:#cfcfcf;line-height:1.7}
+a{text-decoration:none;color:inherit}
+.gold{color:#d7a947}
+.small{color:#d7a947;text-transform:uppercase;letter-spacing:4px;font-size:12px;font-weight:800}
 
-h1,h2{font-family:"Cormorant Garamond",serif}
-
-header{
-position:fixed;
-top:0;
-width:100%;
-height:90px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:0 60px;
-background:linear-gradient(180deg,rgba(0,0,0,.9),rgba(0,0,0,.6));
-border-bottom:1px solid rgba(215,169,71,.3);
-z-index:999;
-}
-
-.logo img{
-height:65px;
-}
-
-nav a{
-margin-left:25px;
-font-size:12px;
-letter-spacing:1px;
-text-transform:uppercase;
-color:#ccc;
-cursor:pointer;
-}
-
+header{position:fixed;top:0;width:100%;height:92px;z-index:999;background:rgba(0,0,0,.82);backdrop-filter:blur(18px);border-bottom:1px solid rgba(215,169,71,.35);display:flex;align-items:center;justify-content:space-between;padding:0 70px}
+.logo img{height:70px;width:auto}
+nav a{margin-left:30px;font-size:12px;text-transform:uppercase;color:#ddd;font-weight:800}
 nav a:hover{color:#d7a947}
 
-.hero{
-height:100vh;
-display:flex;
-align-items:center;
-padding:120px 80px;
-background:
-linear-gradient(90deg,#050505 0%,rgba(0,0,0,.7) 40%,rgba(0,0,0,.2)),
-url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=85") center/cover;
-}
+.hero{min-height:100vh;display:flex;align-items:center;padding:140px 80px;background:linear-gradient(90deg,#050505 0%,rgba(0,0,0,.78) 45%,rgba(0,0,0,.18)),url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=90") center/cover}
+.hero h1{font-size:96px;line-height:.9;margin:20px 0}
+.hero p{max-width:650px;font-size:20px}
+.btn{display:inline-block;margin-top:28px;padding:17px 34px;background:linear-gradient(135deg,#f7df95,#d7a947);color:#000;font-weight:900;text-transform:uppercase}
 
-.hero h1{
-font-size:90px;
-line-height:1;
-margin:20px 0;
-}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);background:#090909;border-top:1px solid rgba(215,169,71,.35);border-bottom:1px solid rgba(215,169,71,.35)}
+.strip div{padding:40px;border-right:1px solid #222}
+.strip h3{color:#d7a947;margin-bottom:12px}
 
-.gold{color:#d7a947}
+.section{padding:110px 80px;text-align:center}
+.section h2{font-size:56px;margin:15px 0 25px}
+.dark{background:#080808}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:45px}
+.card{background:linear-gradient(145deg,#111,#070707);border:1px solid rgba(215,169,71,.28);padding:40px 28px;min-height:200px;transition:.3s}
+.card:hover{transform:translateY(-8px);border-color:#d7a947}
+.card h3{color:#d7a947;margin-bottom:15px}
 
-.btn{
-display:inline-block;
-margin-top:25px;
-padding:16px 30px;
-background:linear-gradient(135deg,#f5d98c,#d7a947);
-color:#000;
-font-weight:800;
-text-transform:uppercase;
-}
-
-.section{
-padding:100px 80px;
-text-align:center;
-}
-
-.cards{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:25px;
-margin-top:40px;
-}
-
-.card{
-background:#111;
-border:1px solid rgba(215,169,71,.3);
-padding:30px;
-}
-
-.card h3{color:#d7a947}
-
-.portal{
-padding:120px 80px;
-background:#080808;
-}
-
-.login-box,.dashboard{
-max-width:1000px;
-margin:auto;
-background:#111;
-padding:40px;
-border:1px solid rgba(215,169,71,.4);
-}
-
-input{
-width:100%;
-padding:15px;
-margin:10px 0;
-background:#050505;
-border:1px solid #333;
-color:white;
-}
-
-button{
-width:100%;
-padding:15px;
-background:linear-gradient(135deg,#f5d98c,#d7a947);
-border:0;
-font-weight:800;
-cursor:pointer;
-}
-
+.portal{padding:120px 80px;background:linear-gradient(90deg,rgba(0,0,0,.92),rgba(0,0,0,.76)),url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1800&q=90") center/cover}
+.portal-box,.dashboard{max-width:1150px;margin:auto;background:rgba(10,10,10,.94);border:1px solid rgba(215,169,71,.42);padding:45px;box-shadow:0 40px 100px rgba(0,0,0,.7)}
+.login-inner{max-width:480px;margin:auto}
+input{width:100%;padding:16px;margin:10px 0;background:#050505;border:1px solid #333;color:white}
+button{width:100%;padding:16px;margin-top:12px;background:linear-gradient(135deg,#f7df95,#d7a947);border:0;font-weight:900;text-transform:uppercase;cursor:pointer}
 .dashboard{display:none}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:35px}
+.stat{background:#111;border:1px solid rgba(215,169,71,.3);padding:26px}
+.stat strong{display:block;font-size:32px;margin-top:12px}
+.green{color:#25d366}
 
-.stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:20px;
-margin-top:30px;
-}
+.admin{display:none;margin-top:45px}
+.admin-card{background:#111;border:1px solid rgba(215,169,71,.35);padding:25px;margin-top:22px;text-align:left}
+.admin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
 
-.stat{
-background:#111;
-padding:20px;
-border:1px solid rgba(215,169,71,.3);
-}
+.founder{display:grid;grid-template-columns:45% 55%;background:linear-gradient(135deg,#050505,#101010);border-top:1px solid rgba(215,169,71,.35)}
+.founder img{width:100%;height:680px;object-fit:cover;object-position:center top}
+.founder div{padding:110px 90px}
+.founder h2{font-size:60px;margin:20px 0}
 
-.stat strong{
-font-size:28px;
-display:block;
-margin-top:10px;
-}
-
-.founder{
-display:grid;
-grid-template-columns:45% 55%;
-background:#080808;
-}
-
-.founder img{
-width:100%;
-height:650px;
-object-fit:cover;
-}
-
-.founder div{
-padding:100px;
-}
-
-footer{
-padding:50px;
-text-align:center;
-border-top:1px solid rgba(215,169,71,.3);
-}
+.contact{padding:100px 80px;text-align:center;background:#060606}
+footer{text-align:center;padding:45px;border-top:1px solid rgba(215,169,71,.35);background:#030303}
 
 @media(max-width:900px){
-.cards,.stats,.founder{grid-template-columns:1fr}
-.hero h1{font-size:50px}
+nav{display:none}
+header{padding:0 22px}
+.hero{padding:120px 28px}.hero h1{font-size:56px}
+.strip,.cards,.stats,.founder,.admin-grid{grid-template-columns:1fr}
+.section,.portal,.contact,.founder div{padding:65px 28px}
 }
 </style>
 </head>
@@ -176,145 +76,242 @@ border-top:1px solid rgba(215,169,71,.3);
 <body>
 
 <header>
-<div class="logo">
-<img src="logo.png">
-</div>
-
-<nav>
-<a href="#home">Home</a>
-<a href="#about">About</a>
-<a href="#strategy">Strategy</a>
-<a href="#portfolio">Portfolio</a>
-<a href="#portal">Investor Portal</a>
-</nav>
+  <div class="logo"><img src="logo.png"></div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#strategy">Strategy</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#portal">Investor Portal</a>
+    <a href="#contact">Contact</a>
+  </nav>
 </header>
 
 <section id="home" class="hero">
-<div>
-<p class="gold">Private Real Estate Investment Firm</p>
-<h1>Alpine Capital Partners</h1>
-<p>Creating long-term wealth through disciplined structure and execution.</p>
-<a href="#portal" class="btn">Investor Access</a>
-</div>
+  <div>
+    <p class="small">Private Real Estate Investment Firm</p>
+    <h1>Alpine Capital Partners</h1>
+    <p>Creating long-term wealth through real assets, disciplined structure, and consistent execution.</p>
+    <a href="#portal" class="btn">Investor Access</a>
+  </div>
+</section>
+
+<section class="strip">
+  <div><h3>Disciplined Strategy</h3><p>Focused on sustainable value creation.</p></div>
+  <div><h3>Real Assets</h3><p>High-quality real estate opportunities.</p></div>
+  <div><h3>Strong Structure</h3><p>Transparency, control, and alignment.</p></div>
+  <div><h3>Long-Term Growth</h3><p>Patient capital and professional execution.</p></div>
 </section>
 
 <section id="about" class="section">
-<h2>Building Value. Delivering Growth.</h2>
-<p>We invest in high-quality real estate opportunities with long-term strategy.</p>
+  <p class="small">About Us</p>
+  <h2>Building Value. Delivering Growth.</h2>
+  <p>Alpine Capital Partners is a private real estate investment company focused on identifying, structuring, and managing real asset opportunities.</p>
 </section>
 
-<section id="strategy" class="section">
-<h2>Investment Strategy</h2>
-<div class="cards">
-<div class="card"><h3>Acquisition</h3></div>
-<div class="card"><h3>Asset Management</h3></div>
-<div class="card"><h3>Value Creation</h3></div>
-<div class="card"><h3>Capital Growth</h3></div>
-</div>
+<section id="strategy" class="section dark">
+  <p class="small">Our Strategy</p>
+  <h2>A disciplined approach to real estate investment.</h2>
+  <div class="cards">
+    <div class="card"><h3>Acquisition</h3><p>Identifying quality assets in strong locations.</p></div>
+    <div class="card"><h3>Asset Management</h3><p>Managing assets with stability and performance.</p></div>
+    <div class="card"><h3>Value Creation</h3><p>Improving assets through strategic planning.</p></div>
+    <div class="card"><h3>Capital Growth</h3><p>Long-term growth through structure and execution.</p></div>
+  </div>
 </section>
 
 <section id="portfolio" class="section">
-<h2>Portfolio</h2>
-<p>Commercial • Residential • Mixed-Use</p>
+  <p class="small">Portfolio Vision</p>
+  <h2>Real Assets. Real Value. Real Growth.</h2>
+  <div class="cards">
+    <div class="card"><h3>Commercial Assets</h3><p>Pipeline</p></div>
+    <div class="card"><h3>Office Buildings</h3><p>Pipeline</p></div>
+    <div class="card"><h3>Residential Projects</h3><p>Pipeline</p></div>
+    <div class="card"><h3>Mixed-Use Assets</h3><p>Pipeline</p></div>
+  </div>
 </section>
 
 <section id="portal" class="portal">
+  <div id="loginBox" class="portal-box">
+    <div class="login-inner">
+      <p class="small">Investor Portal</p>
+      <h2>Approved Investor Access</h2>
+      <p>Secure access for approved investors only.</p>
+      <input id="email" placeholder="Email">
+      <input id="password" type="password" placeholder="Password">
+      <button onclick="login()">Login</button>
+      <p id="loginMessage"></p>
+    </div>
+  </div>
 
-<div id="loginBox" class="login-box">
-<h2>Investor Login</h2>
-<input id="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
-<button onclick="login()">Login</button>
-<p id="msg"></p>
-</div>
+  <div id="dashboard" class="dashboard">
+    <p class="small">Investor Dashboard</p>
+    <h2 id="welcomeName">Welcome</h2>
+    <p id="userEmail"></p>
 
-<div id="dashboard" class="dashboard">
-<h2 id="welcome"></h2>
+    <div class="stats">
+      <div class="stat"><small>Total Investment</small><strong id="totalInvestment">$0</strong></div>
+      <div class="stat"><small>Current Value</small><strong id="currentValue">$0</strong></div>
+      <div class="stat"><small>Total Returns</small><strong id="totalReturns" class="green">$0</strong></div>
+      <div class="stat"><small>Payment Due</small><strong id="paymentDue">$0</strong></div>
+    </div>
 
-<div class="stats">
-<div class="stat"><small>Investment</small><strong id="inv"></strong></div>
-<div class="stat"><small>Value</small><strong id="val"></strong></div>
-<div class="stat"><small>Returns</small><strong id="ret"></strong></div>
-<div class="stat"><small>Due</small><strong id="due"></strong></div>
-</div>
+    <canvas id="growthChart" style="margin-top:40px;"></canvas>
+    <button onclick="logout()">Logout</button>
 
-<canvas id="chart" style="margin-top:40px;"></canvas>
-
-<button onclick="logout()">Logout</button>
-</div>
-
+    <div id="adminPanel" class="admin">
+      <p class="small">Admin Control</p>
+      <h2>Investor Management</h2>
+      <div id="investorList"></div>
+    </div>
+  </div>
 </section>
 
 <section class="founder">
-<img src="ceo.jpg">
-<div>
-<h2>Alexander Alpan</h2>
-<p>Founder & CEO</p>
-<p class="gold">“Creating long-term wealth through real assets and execution.”</p>
-</div>
+  <img src="ceo.jpg">
+  <div>
+    <p class="small">Founder & CEO</p>
+    <h2>Alexander Alpan</h2>
+    <p>Building a disciplined investment platform focused on long-term growth, structure, and execution.</p>
+    <p class="gold">“Creating long-term wealth through real assets, strong structure, and consistent execution.”</p>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <p class="small">Contact</p>
+  <h2>Get In Touch</h2>
+  <p>Phone: 0433 638 491</p>
+  <p>Melbourne, Australia</p>
 </section>
 
 <footer>
-<p>© 2026 Alpine Capital Partners</p>
+  <p>© 2026 Alpine Capital Partners. All Rights Reserved.</p>
 </footer>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, collection, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
 const firebaseConfig = {
-apiKey:"AIzaSyDplPf7cJQ9wK7FHM2NGexjNQegH1IPYHk",
-authDomain:"alpine-capital-partners.firebaseapp.com",
-projectId:"alpine-capital-partners"
+  apiKey: "AIzaSyDplPf7cJQ9wK7FHM2NGexjNQegH1IPYHk",
+  authDomain: "alpine-capital-partners.firebaseapp.com",
+  projectId: "alpine-capital-partners",
+  storageBucket: "alpine-capital-partners.firebasestorage.app",
+  messagingSenderId: "369382075896",
+  appId: "1:369382075896:web:79af780ff267c0f335fa0d",
+  measurementId: "G-LNJ80RTYW6"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const ADMIN_UID = "GiBsDVrlumWZcRXAmP7v7iDvsoE2";
+let chart;
 
-function money(v){return "$"+Number(v||0).toLocaleString()}
+function money(value){return "$" + Number(value || 0).toLocaleString();}
 
-async function load(user){
-const snap = await getDoc(doc(db,"investors",user.uid));
+async function loadInvestor(user){
+  const snap = await getDoc(doc(db,"investors",user.uid));
 
-if(!snap.exists()){
-msg.innerText="Not approved";
-await signOut(auth);
-return;
+  if(!snap.exists()){
+    loginMessage.innerText="Account exists, but investor profile is not approved yet.";
+    await signOut(auth);
+    return;
+  }
+
+  const data = snap.data();
+
+  loginBox.style.display="none";
+  dashboard.style.display="block";
+
+  welcomeName.innerText="Welcome, " + (data.name || user.email);
+  userEmail.innerText=user.email;
+
+  totalInvestment.innerText=money(data.totalInvestment);
+  currentValue.innerText=money(data.currentValue);
+  totalReturns.innerText=money(data.totalReturns);
+  paymentDue.innerText=money(data.paymentDue);
+
+  if(chart) chart.destroy();
+  chart = new Chart(growthChart,{
+    type:"line",
+    data:{
+      labels:["Initial Investment","Current Value"],
+      datasets:[{
+        label:"Portfolio Growth",
+        data:[Number(data.totalInvestment||0),Number(data.currentValue||0)],
+        borderColor:"#d7a947",
+        backgroundColor:"rgba(215,169,71,.18)",
+        fill:true,
+        tension:.35
+      }]
+    },
+    options:{
+      plugins:{legend:{labels:{color:"#fff"}}},
+      scales:{
+        x:{ticks:{color:"#aaa"},grid:{color:"#222"}},
+        y:{ticks:{color:"#aaa"},grid:{color:"#222"}}
+      }
+    }
+  });
+
+  if(user.uid===ADMIN_UID){
+    adminPanel.style.display="block";
+    loadAdminPanel();
+  }
 }
 
-const d=snap.data();
+async function loadAdminPanel(){
+  investorList.innerHTML="";
+  const q = await getDocs(collection(db,"investors"));
 
-loginBox.style.display="none";
-dashboard.style.display="block";
+  q.forEach((docSnap)=>{
+    const d=docSnap.data();
+    const id=docSnap.id;
 
-welcome.innerText="Welcome "+(d.name||user.email);
-inv.innerText=money(d.totalInvestment);
-val.innerText=money(d.currentValue);
-ret.innerText=money(d.totalReturns);
-due.innerText=money(d.paymentDue);
-
-new Chart(chart,{
-type:"line",
-data:{
-labels:["Start","Now"],
-datasets:[{data:[d.totalInvestment,d.currentValue],borderColor:"#d7a947"}]
-}
-});
-}
-
-window.login=async()=>{
-try{
-await signInWithEmailAndPassword(auth,email.value,password.value);
-}catch{
-msg.innerText="Login failed";
-}
+    investorList.innerHTML += `
+      <div class="admin-card">
+        <h3 class="gold">${d.name || "Investor"}</h3>
+        <p>UID: ${id}</p>
+        <div class="admin-grid">
+          <div><label>Total Investment</label><input id="ti-${id}" value="${d.totalInvestment || 0}"></div>
+          <div><label>Current Value</label><input id="cv-${id}" value="${d.currentValue || 0}"></div>
+          <div><label>Total Returns</label><input id="tr-${id}" value="${d.totalReturns || 0}"></div>
+          <div><label>Payment Due</label><input id="pd-${id}" value="${d.paymentDue || 0}"></div>
+        </div>
+        <button onclick="saveInvestor('${id}')">Save Changes</button>
+      </div>
+    `;
+  });
 }
 
-window.logout=()=>signOut(auth);
+window.saveInvestor = async function(id){
+  await updateDoc(doc(db,"investors",id),{
+    totalInvestment:Number(document.getElementById("ti-"+id).value),
+    currentValue:Number(document.getElementById("cv-"+id).value),
+    totalReturns:Number(document.getElementById("tr-"+id).value),
+    paymentDue:Number(document.getElementById("pd-"+id).value)
+  });
+  alert("Investor updated successfully");
+}
 
-onAuthStateChanged(auth,u=>{if(u)load(u)})
+window.login = async function(){
+  loginMessage.innerText="";
+  try{
+    await signInWithEmailAndPassword(auth,email.value,password.value);
+  }catch{
+    loginMessage.innerText="Access denied. Check email/password.";
+  }
+}
+
+window.logout = async function(){
+  await signOut(auth);
+  dashboard.style.display="none";
+  loginBox.style.display="block";
+}
+
+onAuthStateChanged(auth,(user)=>{ if(user) loadInvestor(user); });
 </script>
 
 </body>
