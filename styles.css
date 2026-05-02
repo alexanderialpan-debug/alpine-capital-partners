@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  background: #050505;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+h1 {
+  color: #d7a947;
+  font-size: 64px;
+  margin-top: 80px;
+}
+
+h2 {
+  color: #d7a947;
+  margin-top: 60px;
+}
+
+p {
+  color: #ccc;
+  font-size: 18px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px;
+}
+
+.logo {
+  width: 200px;
+  margin: 40px auto;
+}
+
+.section {
+  margin-top: 60px;
+}
