@@ -562,41 +562,46 @@ window.saveInvestor=async function(id){
   alert("Investor account updated successfully");
 }
 
-window.uploadPassport=async function(){
-  const file=document.getElementById("passportFile").files[0];
+window.uploadPassport = async function(){
+  const file = document.getElementById("passportFile").files[0];
+
   if(!file || !currentUser){
-    document.getElementById("passportStatus").innerText="Please select a JPG, PNG, or PDF file.";
+    document.getElementById("passportStatus").innerText = "Please select a JPG, PNG, or PDF file.";
     return;
   }
 
-  const allowedTypes=["image/jpeg","image/png","application/pdf"];
+  const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
+
   if(!allowedTypes.includes(file.type)){
-    document.getElementById("passportStatus").innerText="Only JPG, PNG, or PDF files are accepted.";
+    document.getElementById("passportStatus").innerText = "Only JPG, PNG, or PDF files are accepted.";
     return;
   }
 
-  document.getElementById("passportStatus").innerText="Uploading securely...";
+  document.getElementById("passportStatus").innerText = "Uploading securely...";
 
   try{
-    const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
-    const fileRef=ref(storage,`kyc/${currentUser.uid}/${Date.now()}-${safeName}`);
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    const fileRef = ref(storage, `kyc/${currentUser.uid}/${Date.now()}-${safeName}`);
 
-    await uploadBytes(fileRef,file,{contentType:file.type});
-    const url=await getDownloadURL(fileRef);
-
-    await updateDoc(doc(db,"investors",currentUser.uid),{
-      passportUrl:url,
-      passportFileName:safeName,
-      passportFileType:file.type,
-      kycStatus:"Submitted - Under Review",
-      kycSubmittedAt:serverTimestamp()
+    await uploadBytes(fileRef, file, {
+      contentType: file.type
     });
 
-    document.getElementById("passportStatus").innerText="Submitted successfully. Review may take 3–5 business days.";
-    document.getElementById("kycStatus").innerText="Submitted - Under Review";
-    applyKycLock("Submitted - Under Review");
+    const url = await getDownloadURL(fileRef);
+
+    await updateDoc(doc(db,"investors",currentUser.uid),{
+      passportUrl: url,
+      passportFileName: safeName,
+      passportFileType: file.type,
+      kycStatus: "Submitted - Under Review",
+      kycSubmittedAt: serverTimestamp()
+    });
+
+    document.getElementById("passportStatus").innerText = "Submitted successfully. Review may take 3–5 business days.";
+    document.getElementById("kycStatus").innerText = "Submitted - Under Review";
+
   }catch(error){
-    document.getElementById("passportStatus").innerText="Upload failed. Please check Firebase Storage rules.";
+    document.getElementById("passportStatus").innerText = "Upload failed. Please try again.";
     console.error(error);
   }
 }
