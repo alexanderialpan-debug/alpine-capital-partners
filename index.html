@@ -1,149 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Alpine Capital Partners</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpine Capital Partners</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#050505;color:white;font-family:Inter,Arial,sans-serif}
+h1,h2{font-family:"Cormorant Garamond",serif;margin:0}
+p{color:#cfcfcf;line-height:1.7}
+a{text-decoration:none;color:inherit}
+.gold{color:#d7a947;text-transform:uppercase;letter-spacing:3px;font-size:13px;font-weight:700}
+
+header{position:fixed;top:0;width:100%;height:78px;z-index:99;background:rgba(0,0,0,.85);border-bottom:1px solid rgba(215,169,71,.35);display:flex;align-items:center;justify-content:space-between;padding:0 55px}
+.logo{display:flex;align-items:center;gap:15px;color:#d7a947;font-weight:700;letter-spacing:2px}
+.logo img{height:48px;width:80px;object-fit:cover}
+nav a{margin-left:25px;font-size:12px;text-transform:uppercase;color:#ddd}
+nav a:hover{color:#d7a947}
+.navbtn{border:1px solid #d7a947;color:#d7a947;padding:12px 20px;font-size:12px;text-transform:uppercase}
+
+.hero{min-height:100vh;display:flex;align-items:center;padding:130px 70px 70px;background:linear-gradient(90deg,#050505 0%,rgba(0,0,0,.75) 45%,rgba(0,0,0,.25)),url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=85") center/cover}
+.hero h1{font-size:88px;line-height:.9;margin:20px 0}
+.hero p{font-size:20px;max-width:590px}
+.buttons{display:flex;gap:18px;margin-top:30px}
+.btn{padding:16px 30px;text-transform:uppercase;font-weight:700;font-size:13px}
+.goldbtn{background:linear-gradient(135deg,#f3d58a,#d7a947);color:black}
+.outline{border:1px solid #d7a947;color:white}
+
+.strip{display:grid;grid-template-columns:repeat(4,1fr);background:#090909;border-top:1px solid rgba(215,169,71,.35);border-bottom:1px solid rgba(215,169,71,.35)}
+.strip div{padding:40px;border-right:1px solid #222}
+.strip h3{color:#d7a947;text-transform:uppercase;font-size:14px}
+
+.split{display:grid;grid-template-columns:42% 58%;min-height:520px}
+.splittext{padding:90px 70px;background:#090909}
+.splittext h2{font-size:50px;margin:15px 0}
+.splitimg{background:url("https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1400&q=85") center/cover}
+
+.section{padding:95px 70px;text-align:center}
+.section h2{font-size:48px;margin:15px 0 45px}
+.dark{background:#080808;border-top:1px solid rgba(215,169,71,.35);border-bottom:1px solid rgba(215,169,71,.35)}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.card{background:linear-gradient(145deg,#111,#070707);border:1px solid rgba(215,169,71,.28);padding:35px 25px;min-height:190px}
+.card h3{color:#d7a947;text-transform:uppercase;font-size:14px}
+
+.portfolio{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.property{background:#101010;border:1px solid #222;text-align:left;overflow:hidden}
+.property img{width:100%;height:220px;object-fit:cover}
+.property h3,.property p,.property span{margin-left:20px;margin-right:20px}
+.property span{color:#25d366;display:block;margin-bottom:22px}
+
+.portal{display:grid;grid-template-columns:45% 55%;gap:35px;padding:95px 70px;background:linear-gradient(90deg,rgba(0,0,0,.9),rgba(0,0,0,.7)),url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=85") center/cover;border-top:1px solid rgba(215,169,71,.35)}
+.portalbox{background:rgba(10,10,10,.88);border:1px solid rgba(215,169,71,.35);padding:35px}
+input,textarea{width:100%;padding:15px;margin:10px 0;background:#090909;border:1px solid #333;color:white}
+button{width:100%;padding:15px;margin-top:12px;background:linear-gradient(135deg,#f3d58a,#d7a947);border:0;font-weight:800;text-transform:uppercase}
+
+.founder{display:grid;grid-template-columns:32% 68%;background:#080808;border-top:1px solid rgba(215,169,71,.35)}
+.founderphoto{height:360px;background:#111}
+.founderphoto img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.foundertext{padding:70px}
+.foundertext h2{font-size:48px}
+.quote{color:#d7a947;font-style:italic}
+
+.contact{display:grid;grid-template-columns:40% 60%;gap:50px;padding:95px 70px;background:#060606}
+textarea{height:150px}
+footer{text-align:center;padding:45px;background:#030303;border-top:1px solid rgba(215,169,71,.35)}
+footer h3{color:#d7a947}
+
+@media(max-width:900px){
+header{padding:0 20px}nav,.navbtn{display:none}
+.hero{padding:120px 25px}.hero h1{font-size:55px}
+.strip,.split,.cards,.portfolio,.portal,.founder,.contact{grid-template-columns:1fr}
+.section,.splittext,.portal,.contact,.foundertext{padding:60px 25px}
+}
+</style>
 </head>
 
 <body>
 
-<header class="navbar">
-  <div class="brand">ALPINE CAPITAL</div>
+<header>
+  <div class="logo">
+    <img src="logo.jpg">
+    <span>ALPINE CAPITAL</span>
+  </div>
   <nav>
     <a href="#home">Home</a>
-    <a href="#about">About</a>
+    <a href="#about">About Us</a>
     <a href="#strategy">Strategy</a>
     <a href="#portfolio">Portfolio</a>
     <a href="#portal">Investor Portal</a>
     <a href="#contact">Contact</a>
   </nav>
-  <a class="nav-btn" href="#portal">Investor Access</a>
+  <a class="navbtn" href="#portal">Investor Access</a>
 </header>
 
 <section id="home" class="hero">
-  <div class="hero-content">
-    <p class="gold-small">Private Real Estate Investment Firm</p>
-    <h1>Alpine Capital Partners</h1>
-    <p class="hero-text">Creating long-term wealth through real assets, strong structure, and consistent execution.</p>
+  <div>
+    <p class="gold">Private Real Estate Investment Firm</p>
+    <h1>Alpine<br>Capital Partners</h1>
+    <p>Creating long-term wealth through real assets, strong structure, and consistent execution.</p>
     <div class="buttons">
-      <a href="#portal" class="btn gold-btn">Investor Access</a>
-      <a href="#portfolio" class="btn outline-btn">View Opportunities</a>
+      <a class="btn goldbtn" href="#portal">Investor Access</a>
+      <a class="btn outline" href="#portfolio">View Opportunities</a>
     </div>
   </div>
 </section>
 
-<section class="feature-strip">
-  <div>
-    <h3>Disciplined Strategy</h3>
-    <p>Focused on sustainable value creation.</p>
-  </div>
-  <div>
-    <h3>Real Assets</h3>
-    <p>Investing in high-quality real estate.</p>
-  </div>
-  <div>
-    <h3>Strong Structure</h3>
-    <p>Built on transparency and alignment.</p>
-  </div>
-  <div>
-    <h3>Long-Term Growth</h3>
-    <p>Committed to consistent performance.</p>
-  </div>
+<section class="strip">
+  <div><h3>Disciplined Strategy</h3><p>Focused on sustainable value creation.</p></div>
+  <div><h3>Real Assets</h3><p>Investing in high-quality real estate.</p></div>
+  <div><h3>Strong Structure</h3><p>Built on transparency, security, and alignment.</p></div>
+  <div><h3>Long-Term Growth</h3><p>Committed to long-term growth and professional execution.</p></div>
 </section>
 
 <section id="about" class="split">
-  <div class="split-text">
-    <p class="gold-small">About Alpine Capital Partners</p>
+  <div class="splittext">
+    <p class="gold">About Alpine Capital Partners</p>
     <h2>Building Value.<br>Delivering Growth.</h2>
-    <p>Alpine Capital Partners is a private real estate investment firm focused on acquiring and managing high-quality assets.</p>
-    <p>Our approach combines disciplined execution, strong financial structuring, and a long-term investment horizon.</p>
-    <p>We partner with investors to deliver stable, scalable, and sustainable returns through real assets.</p>
+    <p>Alpine Capital Partners is a private real estate investment company focused on identifying, structuring, and managing real asset opportunities.</p>
+    <p>Our approach is built on disciplined analysis, strong financial structure, and long-term value creation.</p>
+    <p>We are building a platform designed for trust, transparency, and professional execution.</p>
   </div>
-  <div class="split-image"></div>
+  <div class="splitimg"></div>
 </section>
 
 <section id="strategy" class="section dark">
-  <p class="gold-small">Our Strategy</p>
+  <p class="gold">Our Strategy</p>
   <h2>A disciplined approach to real estate investment.</h2>
   <div class="cards">
-    <div class="card">
-      <h3>Acquisition</h3>
-      <p>Identifying undervalued real estate assets in strong locations with long-term growth potential.</p>
-    </div>
-    <div class="card">
-      <h3>Asset Management</h3>
-      <p>Optimising performance, reducing risk, and protecting investor capital through active management.</p>
-    </div>
-    <div class="card">
-      <h3>Value Creation</h3>
-      <p>Strategic improvements designed to increase asset value and long-term income potential.</p>
-    </div>
-    <div class="card">
-      <h3>Capital Growth</h3>
-      <p>Building sustainable growth through structure, patience, and disciplined execution.</p>
-    </div>
+    <div class="card"><h3>Acquisition</h3><p>Identifying quality assets in strong locations with long-term potential.</p></div>
+    <div class="card"><h3>Asset Management</h3><p>Managing assets with focus on stability, performance, and risk control.</p></div>
+    <div class="card"><h3>Value Creation</h3><p>Improving assets through strategic planning and operational discipline.</p></div>
+    <div class="card"><h3>Capital Growth</h3><p>Building long-term growth through structure, patience, and execution.</p></div>
   </div>
 </section>
 
 <section id="portfolio" class="section">
-  <p class="gold-small">Portfolio</p>
+  <p class="gold">Portfolio Vision</p>
   <h2>Real Assets. Real Value. Real Growth.</h2>
-  <div class="portfolio-grid">
-    <div class="property">
-      <div class="property-img img1"></div>
-      <h3>Melbourne Commercial Fund I</h3>
-      <p>Commercial · Melbourne, VIC</p>
-      <span>Active</span>
-    </div>
-    <div class="property">
-      <div class="property-img img2"></div>
-      <h3>Riverside Offices Complex</h3>
-      <p>Commercial · Southbank</p>
-      <span>Active</span>
-    </div>
-    <div class="property">
-      <div class="property-img img3"></div>
-      <h3>The Carter Apartments</h3>
-      <p>Residential · Melbourne, VIC</p>
-      <span>Active</span>
-    </div>
-    <div class="property">
-      <div class="property-img img4"></div>
-      <h3>Harbour View Towers</h3>
-      <p>Mixed-Use · Australia</p>
-      <span>Active</span>
-    </div>
+  <div class="portfolio">
+    <div class="property"><img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=900&q=85"><h3>Commercial Assets</h3><p>Future acquisition focus</p><span>Pipeline</span></div>
+    <div class="property"><img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=85"><h3>Office Buildings</h3><p>Long-term income potential</p><span>Pipeline</span></div>
+    <div class="property"><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=900&q=85"><h3>Residential Projects</h3><p>Growth-focused opportunities</p><span>Pipeline</span></div>
+    <div class="property"><img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=900&q=85"><h3>Mixed-Use Assets</h3><p>Strategic real estate potential</p><span>Pipeline</span></div>
   </div>
 </section>
 
-<section id="portal" class="portal-section">
-  <div class="portal-text">
-    <p class="gold-small">Investor Portal</p>
-    <h2>Secure access to your investments, performance, and statements.</h2>
-    <p>Investors can view investment balances, returns, payment due amounts, documents, and statements.</p>
+<section id="portal" class="portal">
+  <div>
+    <p class="gold">Investor Portal</p>
+    <h2>Secure investor access coming soon.</h2>
+    <p>The investor portal will provide future access to investor documents, opportunity updates, communication, and account-related information.</p>
+    <p>No investor balances or returns are displayed until real investments are formally active.</p>
   </div>
 
-  <div class="portal-box">
-    <h3>Investor Dashboard Preview</h3>
-    <div class="stats">
-      <div><small>Total Investment</small><strong>$250,000</strong></div>
-      <div><small>Current Value</small><strong>$287,500</strong></div>
-      <div><small>Total Returns</small><strong class="green">$37,500</strong></div>
-      <div><small>Payment Due</small><strong>$5,250</strong></div>
-    </div>
-    <button>Login Coming Soon</button>
+  <div class="portalbox">
+    <h2>Register Interest</h2>
+    <p>Leave your details to receive future updates.</p>
+    <input placeholder="Full Name">
+    <input placeholder="Email Address">
+    <input placeholder="Phone Number">
+    <button>Register Interest</button>
   </div>
 </section>
 
 <section class="founder">
-  <div class="founder-photo">
-    <img src="alexander-alpan.jpg" alt="Alexander Alpan">
+  <div class="founderphoto">
+    <img src="alex.jpg">
   </div>
-  <div class="founder-text">
-    <p class="gold-small">Founder & CEO</p>
+  <div class="foundertext">
+    <p class="gold">Founder & CEO</p>
     <h2>Alexander Alpan</h2>
     <p>Building a disciplined investment platform focused on long-term growth, structure, and execution.</p>
     <p class="quote">“Creating long-term wealth through real assets, strong structure, and consistent execution.”</p>
@@ -152,13 +180,12 @@
 
 <section id="contact" class="contact">
   <div>
-    <p class="gold-small">Contact</p>
+    <p class="gold">Contact</p>
     <h2>Get In Touch</h2>
     <p>We welcome inquiries from investors, partners, and professionals.</p>
     <p>Phone: 0433 638 491</p>
     <p>Location: Melbourne, Australia</p>
   </div>
-
   <form>
     <input placeholder="Your Name">
     <input placeholder="Email Address">
