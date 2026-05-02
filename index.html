@@ -17,6 +17,7 @@ p{color:#cfcfcf;line-height:1.7}
 a{text-decoration:none;color:inherit}
 .gold{color:#d7a947}
 .green{color:#25d366}
+.red{color:#ff6b6b}
 .small{color:#d7a947;text-transform:uppercase;letter-spacing:4px;font-size:12px;font-weight:800}
 
 .fade{opacity:0;transform:translateY(35px);transition:1s}
@@ -33,6 +34,9 @@ nav a:hover{color:#d7a947}
 
 .btn,button{display:inline-block;padding:16px 30px;background:linear-gradient(135deg,#f7df95,#d7a947);color:#000;font-weight:900;text-transform:uppercase;border:0;cursor:pointer;width:100%;margin-top:12px}
 .btn{width:auto;margin-top:28px}
+.danger{background:#9b1c1c!important;color:white!important}
+.approve{background:#1f8f4d!important;color:white!important}
+.reject{background:#7a3b00!important;color:white!important}
 
 .strip{display:grid;grid-template-columns:repeat(4,1fr);background:#090909;border-top:1px solid rgba(215,169,71,.35);border-bottom:1px solid rgba(215,169,71,.35)}
 .strip div{padding:40px;border-right:1px solid #222}
@@ -59,7 +63,7 @@ textarea{min-height:130px}
 .stat{background:#111;border:1px solid rgba(215,169,71,.3);padding:26px}
 .stat strong{display:block;font-size:30px;margin-top:10px}
 
-.transactions,.reports,.investor-notes,.lead-box{margin-top:45px;background:#0b0b0b;border:1px solid rgba(215,169,71,.3);padding:30px;text-align:left}
+.transactions,.reports,.investor-notes,.lead-box,.kyc-box{margin-top:45px;background:#0b0b0b;border:1px solid rgba(215,169,71,.3);padding:30px;text-align:left}
 .transaction-row,.report-row,.lead-row{display:grid;grid-template-columns:1fr 160px 120px;gap:20px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.08)}
 .report-row{grid-template-columns:1fr 160px}
 .lead-row{grid-template-columns:1fr}
@@ -161,13 +165,13 @@ header{padding:0 22px}
 <section id="onboarding" class="section fade">
   <p class="small">Investor Onboarding</p>
   <h2>Private Access Process</h2>
-  <p>Investor portal access is only provided to approved investors. Access credentials are issued directly after internal approval.</p>
+  <p>Investor portal access is only provided to approved investors. Identity verification may take 3–5 business days after document submission.</p>
 
   <div class="cards">
-    <div class="card"><h3>1. Expression of Interest</h3><p>Submit your details and investment interest for initial review.</p></div>
-    <div class="card"><h3>2. Suitability Review</h3><p>We review investor suitability, objectives, and documentation requirements.</p></div>
-    <div class="card"><h3>3. Account Setup</h3><p>Approved investors receive secure login credentials for portal access.</p></div>
-    <div class="card"><h3>4. Ongoing Reporting</h3><p>Investors receive access to statements, reports, notes, and investment updates.</p></div>
+    <div class="card"><h3>1. Application</h3><p>Submit your details and investment interest for initial review.</p></div>
+    <div class="card"><h3>2. Review</h3><p>We review investor suitability, objectives, and documentation requirements.</p></div>
+    <div class="card"><h3>3. Identity Verification</h3><p>Approved applicants submit identity documents securely through the portal.</p></div>
+    <div class="card"><h3>4. Final Approval</h3><p>Admin confirms documents and activates full investor access.</p></div>
   </div>
 </section>
 
@@ -200,12 +204,20 @@ header{padding:0 22px}
       <div class="stat"><small>Payment Due</small><strong id="paymentDue">$0</strong></div>
       <div class="stat"><small>Total Return %</small><strong id="returnPercent" class="green">0%</strong></div>
       <div class="stat"><small>Monthly Yield</small><strong id="monthlyYield">0%</strong></div>
-      <div class="stat"><small>Status</small><strong id="investorStatus">Approved</strong></div>
+      <div class="stat"><small>KYC Status</small><strong id="kycStatus">Not Submitted</strong></div>
     </div>
 
     <div class="investor-notes">
       <h2>Investor Notes</h2>
       <p id="investorNotes">No notes available.</p>
+    </div>
+
+    <div class="kyc-box">
+      <h2>Identity Verification</h2>
+      <p>Please upload a clear passport or identity document. Review may take 3–5 business days.</p>
+      <input type="file" id="passportFile" accept="image/*,.pdf">
+      <button onclick="uploadPassport()">Submit Passport / ID</button>
+      <p id="passportStatus"></p>
     </div>
 
     <div class="transactions">
@@ -248,7 +260,7 @@ header{padding:0 22px}
 </section>
 
 <section class="disclaimer fade">
-  <p><strong>Important Notice:</strong> The information on this website is general in nature and does not constitute financial advice, investment advice, legal advice, or an offer to the public. Investors should obtain independent legal, financial, and tax advice before making any investment decision. Alpine Capital Partners does not guarantee returns, capital growth, or income outcomes.</p>
+  <p><strong>Important Notice:</strong> This website is general information only and does not constitute financial advice, legal advice, investment advice, or an offer to the public. Identity documents are sensitive information and should only be submitted after you are comfortable with Alpine Capital Partners’ privacy handling process. Investors should obtain independent legal, financial, and tax advice before making any decision.</p>
 </section>
 
 <section id="contact" class="contact fade">
@@ -302,7 +314,8 @@ header{padding:0 22px}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, collection, getDocs, updateDoc, addDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc, collection, getDocs, updateDoc, addDoc, deleteDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDplPf7cJQ9wK7FHM2NGexjNQegH1IPYHk",
@@ -317,8 +330,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 const ADMIN_UID = "GiBsDVrlumWZcRXAmP7v7iDvsoE2";
 let chart;
+let currentUser = null;
 
 function money(v){return "$"+Number(v||0).toLocaleString();}
 function percent(v){return Number(v||0).toFixed(2)+"%";}
@@ -344,6 +359,7 @@ function renderTransactions(data){
 }
 
 async function loadInvestor(user){
+  currentUser = user;
   const snap=await getDoc(doc(db,"investors",user.uid));
   if(!snap.exists()){
     document.getElementById("loginMessage").innerText="Account exists, but investor profile is not approved yet.";
@@ -367,7 +383,7 @@ async function loadInvestor(user){
   document.getElementById("paymentDue").innerText=money(d.paymentDue);
   document.getElementById("returnPercent").innerText=percent(ti>0?(tr/ti)*100:0);
   document.getElementById("monthlyYield").innerText=percent(d.monthlyYield||0);
-  document.getElementById("investorStatus").innerText=d.status||"Approved";
+  document.getElementById("kycStatus").innerText=d.kycStatus||"Not Submitted";
   document.getElementById("investorNotes").innerText=d.notes||"No notes available.";
 
   renderTransactions(d);
@@ -379,24 +395,8 @@ async function loadInvestor(user){
   if(chart)chart.destroy();
   chart=new Chart(document.getElementById("growthChart"),{
     type:"line",
-    data:{
-      labels:["Total Investment","Current Value","Total Returns"],
-      datasets:[{
-        label:"Portfolio Overview",
-        data:[ti,cv,tr],
-        borderColor:"#d7a947",
-        backgroundColor:"rgba(215,169,71,.18)",
-        fill:true,
-        tension:.35
-      }]
-    },
-    options:{
-      plugins:{legend:{labels:{color:"#fff"}}},
-      scales:{
-        x:{ticks:{color:"#aaa"},grid:{color:"#222"}},
-        y:{ticks:{color:"#aaa"},grid:{color:"#222"}}
-      }
-    }
+    data:{labels:["Total Investment","Current Value","Total Returns"],datasets:[{label:"Portfolio Overview",data:[ti,cv,tr],borderColor:"#d7a947",backgroundColor:"rgba(215,169,71,.18)",fill:true,tension:.35}]},
+    options:{plugins:{legend:{labels:{color:"#fff"}}},scales:{x:{ticks:{color:"#aaa"},grid:{color:"#222"}},y:{ticks:{color:"#aaa"},grid:{color:"#222"}}}}
   });
 
   if(user.uid===ADMIN_UID){
@@ -417,6 +417,8 @@ async function loadAdminPanel(){
       <div class="admin-card">
         <h3 class="gold">${d.name||"Investor"}</h3>
         <p>UID: ${id}</p>
+        <p>KYC: ${d.kycStatus||"Not Submitted"}</p>
+        ${d.passportUrl ? `<p><a class="gold" href="${d.passportUrl}" target="_blank">View Passport / ID</a></p>` : `<p>No passport uploaded</p>`}
 
         <div class="admin-grid-four">
           <div><label>Tier</label><input id="tier-${id}" value="${d.tier||'Standard'}"></div>
@@ -428,7 +430,7 @@ async function loadAdminPanel(){
         <div class="admin-grid">
           <div><label>Payment Due</label><input id="pd-${id}" value="${d.paymentDue||0}"></div>
           <div><label>Monthly Yield %</label><input id="my-${id}" value="${d.monthlyYield||0}"></div>
-          <div><label>Status</label><input id="status-${id}" value="${d.status||'Approved'}"></div>
+          <div><label>KYC Status</label><input id="kyc-${id}" value="${d.kycStatus||'Not Submitted'}"></div>
         </div>
 
         <div class="admin-grid">
@@ -436,7 +438,6 @@ async function loadAdminPanel(){
         </div>
 
         <h3 class="gold" style="margin-top:30px;">Transaction Editor</h3>
-
         ${[1,2,3,4].map(n=>`
           <div class="admin-grid">
             <div><label>Transaction ${n} Name</label><input id="t${n}n-${id}" value="${d['transaction'+n+'Name']||['Initial Capital Contribution','Monthly Return Distribution','Management Fee','Upcoming Payment Due'][n-1]}"></div>
@@ -477,9 +478,32 @@ async function loadLeads(){
         <span>Experience: ${d.experienceLevel||""}</span>
         <span>Status: ${d.status||"New Application"}</span>
         <span>Message: ${d.message||""}</span>
+
+        <button class="approve" onclick="approveLead('${s.id}')">Approve</button>
+        <button class="reject" onclick="rejectLead('${s.id}')">Reject</button>
+        <button class="danger" onclick="deleteLead('${s.id}')">🗑 Delete</button>
       </div>
     `;
   });
+}
+
+window.approveLead=async function(id){
+  await updateDoc(doc(db,"leads",id),{status:"Approved - Create investor login and request passport"});
+  alert("Lead approved. Next: create Firebase Auth user and investor profile.");
+  loadLeads();
+}
+
+window.rejectLead=async function(id){
+  await updateDoc(doc(db,"leads",id),{status:"Rejected"});
+  alert("Lead rejected");
+  loadLeads();
+}
+
+window.deleteLead=async function(id){
+  if(!confirm("Delete this lead permanently?")) return;
+  await deleteDoc(doc(db,"leads",id));
+  alert("Lead deleted");
+  loadLeads();
 }
 
 window.saveInvestor=async function(id){
@@ -490,7 +514,7 @@ window.saveInvestor=async function(id){
     totalReturns:Number(document.getElementById("tr-"+id).value),
     paymentDue:Number(document.getElementById("pd-"+id).value),
     monthlyYield:Number(document.getElementById("my-"+id).value),
-    status:document.getElementById("status-"+id).value,
+    kycStatus:document.getElementById("kyc-"+id).value,
     notes:document.getElementById("notes-"+id).value,
     report1:document.getElementById("r1-"+id).value,
     report2:document.getElementById("r2-"+id).value,
@@ -506,6 +530,30 @@ window.saveInvestor=async function(id){
 
   await updateDoc(doc(db,"investors",id),update);
   alert("Investor account updated successfully");
+}
+
+window.uploadPassport=async function(){
+  const file=document.getElementById("passportFile").files[0];
+  if(!file || !currentUser){
+    document.getElementById("passportStatus").innerText="Please select a file first.";
+    return;
+  }
+
+  document.getElementById("passportStatus").innerText="Uploading securely...";
+
+  const fileRef=ref(storage,`kyc/${currentUser.uid}/${Date.now()}-${file.name}`);
+  await uploadBytes(fileRef,file);
+  const url=await getDownloadURL(fileRef);
+
+  await updateDoc(doc(db,"investors",currentUser.uid),{
+    passportUrl:url,
+    passportFileName:file.name,
+    kycStatus:"Submitted - Under Review",
+    kycSubmittedAt:serverTimestamp()
+  });
+
+  document.getElementById("passportStatus").innerText="Submitted successfully. Review may take 3–5 business days.";
+  document.getElementById("kycStatus").innerText="Submitted - Under Review";
 }
 
 window.submitLead=async function(){
@@ -526,7 +574,6 @@ window.submitLead=async function(){
     });
 
     document.getElementById("leadStatus").innerText="Application submitted successfully.";
-
     ["leadName","leadEmail","leadPhone","leadInvestment","leadMessage"].forEach(id=>document.getElementById(id).value="");
     document.getElementById("leadNetWorth").value="";
     document.getElementById("leadRisk").value="";
