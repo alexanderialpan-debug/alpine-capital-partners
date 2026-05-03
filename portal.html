@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpine Investor Portal</title>
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(circle at top,#17120a,#050505 40%,#000);
+  color:#fff;
+  font-family:Inter,Arial,sans-serif;
+  min-height:100vh;
+}
+.app{
+  max-width:520px;
+  margin:auto;
+  min-height:100vh;
+  padding:24px;
+}
+.logo{text-align:center;margin:20px 0 30px}
+.logo img{height:90px;filter:drop-shadow(0 0 20px rgba(215,169,71,.35))}
+.card{
+  background:rgba(12,12,12,.82);
+  border:1px solid rgba(215,169,71,.35);
+  padding:24px;
+  margin:18px 0;
+  border-radius:24px;
+  box-shadow:0 25px 80px rgba(0,0,0,.6);
+  backdrop-filter:blur(18px);
+}
+h1,h2{color:#fff;margin-bottom:12px}
+p{color:#bbb;line-height:1.6}
+.small{color:#d7a947;text-transform:uppercase;letter-spacing:3px;font-size:11px;font-weight:900}
+input,textarea{
+  width:100%;
+  padding:15px;
+  margin:10px 0;
+  background:#050505;
+  border:1px solid #333;
+  color:white;
+  border-radius:14px;
+}
+button{
+  width:100%;
+  padding:15px;
+  margin-top:10px;
+  border:0;
+  border-radius:14px;
+  background:linear-gradient(135deg,#f4df9a,#d7a947);
+  color:#000;
+  font-weight:900;
+  text-transform:uppercase;
+}
+.dashboard{display:none}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.stat{
+  background:#0b0b0b;
+  border:1px solid rgba(215,169,71,.25);
+  padding:18px;
+  border-radius:18px;
+}
+.stat small{color:#999;text-transform:uppercase;font-size:10px;font-weight:900}
+.stat strong{display:block;font-size:22px;margin-top:8px}
+.green{color:#25d366}
+.chat-window{
+  height:330px;
+  overflow-y:auto;
+  background:#050505;
+  border:1px solid rgba(215,169,71,.2);
+  padding:14px;
+  border-radius:18px;
+  margin-top:15px;
+}
+.bubble{
+  max-width:82%;
+  padding:12px 14px;
+  margin:9px 0;
+  border-radius:18px;
+  font-size:14px;
+  line-height:1.5;
+}
+.user{
+  margin-left:auto;
+  background:linear-gradient(135deg,#d7a947,#f4df9a);
+  color:#000;
+  border-bottom-right-radius:4px;
+}
+.admin{
+  margin-right:auto;
+  background:#151515;
+  border:1px solid rgba(215,169,71,.2);
+  color:white;
+  border-bottom-left-radius:4px;
+}
+.bubble small{display:block;font-size:10px;margin-top:5px;opacity:.65}
+.status-dot{
+  display:inline-block;
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#25d366;
+  margin-right:7px;
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <div class="logo">
+    <img src="logo.png">
+  </div>
+
+  <div id="loginBox" class="card">
+    <p class="small">Investor Mobile Portal</p>
+    <h1>Private Access</h1>
+    <p>Secure investor login for Alpine Capital Partners.</p>
+
+    <input id="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p id="loginMessage"></p>
+  </div>
+
+  <div id="dashboard" class="dashboard">
+
+    <div class="card">
+      <p class="small">Investor Dashboard</p>
+      <h2 id="welcomeName">Welcome</h2>
+      <p id="userEmail"></p>
+
+      <div class="stat-grid">
+        <div class="stat"><small>Total Investment</small><strong id="totalInvestment">$0</strong></div>
+        <div class="stat"><small>Current Value</small><strong id="currentValue">$0</strong></div>
+        <div class="stat"><small>Total Returns</small><strong id="totalReturns" class="green">$0</strong></div>
+        <div class="stat"><small>KYC Status</small><strong id="kycStatus">Pending</strong></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Portfolio Growth</h2>
+      <canvas id="growthChart"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Secure Chat</h2>
+      <p id="adminOnlineStatus">Checking admin status...</p>
+
+      <div id="memberMessageList" class="chat-window"></div>
+
+      <textarea id="memberMessage" placeholder="Write your message..."></textarea>
+      <button onclick="sendMemberMessage()">Send Message</button>
+    </div>
+
+    <div class="card">
+      <h2>Documents</h2>
+      <p><a id="report1" target="_blank">Investment Summary</a></p>
+      <p><a id="report2" target="_blank">Monthly Statement</a></p>
+      <p><a id="report3" target="_blank">Tax Report</a></p>
+      <p><a id="report4" target="_blank">Agreement / Terms</a></p>
+    </div>
+
+    <button onclick="logout()">Logout</button>
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, collection, addDoc, updateDoc, serverTimestamp, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDplPf7cJQ9wK7FHM2NGexjNQegH1IPYHk",
+  authDomain: "alpine-capital-partners.firebaseapp.com",
+  projectId: "alpine-capital-partners",
+  storageBucket: "alpine-capital-partners.firebasestorage.app",
+  messagingSenderId: "369382075896",
+  appId: "1:369382075896:web:79af780ff267c0f335fa0d",
+  measurementId: "G-LNJ80RTYW6"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentUser = null;
+let chart = null;
+let unsubMessages = null;
+let unsubStatus = null;
+
+function money(v){return "$"+Number(v||0).toLocaleString();}
+function timeText(ts){
+  if(!ts || !ts.toDate) return "";
+  return ts.toDate().toLocaleString("en-AU",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
+}
+
+function setupReport(id,link){
+  const el=document.getElementById(id);
+  if(link){el.href=link;el.style.color="#d7a947";}
+  else{el.href="#";el.innerText=el.innerText+" - Not Uploaded";el.style.color="#777";}
+}
+
+function listenAdminStatus(){
+  if(unsubStatus) unsubStatus();
+
+  unsubStatus = onSnapshot(doc(db,"settings","adminStatus"),snap=>{
+    const el=document.getElementById("adminOnlineStatus");
+
+    if(!snap.exists()){
+      el.innerText="Admin offline";
+      return;
+    }
+
+    const d=snap.data();
+
+    if(d.status==="Online"){
+      el.innerHTML='<span class="status-dot"></span>Admin online';
+    }else{
+      el.innerText="Admin offline" + (d.lastOnline ? " • Last seen " + timeText(d.lastOnline) : "");
+    }
+  });
+}
+
+function listenMessages(){
+  const list=document.getElementById("memberMessageList");
+  if(unsubMessages) unsubMessages();
+
+  const q=query(
+    collection(db,"messages"),
+    where("uid","==",currentUser.uid),
+    orderBy("createdAt","asc")
+  );
+
+  unsubMessages=onSnapshot(q,snap=>{
+    list.innerHTML="";
+
+    snap.forEach(s=>{
+      const d=s.data();
+
+      list.innerHTML+=`
+        <div class="bubble user">
+          ${d.message || ""}
+          <small>${timeText(d.createdAt)} • ${d.status || "Open"}</small>
+        </div>
+      `;
+
+      if(d.reply){
+        list.innerHTML+=`
+          <div class="bubble admin">
+            ${d.reply}
+            <small>Alpine Capital Partners • ${timeText(d.repliedAt)}</small>
+          </div>
+        `;
+      }
+    });
+
+    list.scrollTop=list.scrollHeight;
+  });
+}
+
+window.sendMemberMessage=async function(){
+  const box=document.getElementById("memberMessage");
+  const msg=box.value.trim();
+
+  if(!msg){
+    alert("Write a message first.");
+    return;
+  }
+
+  await addDoc(collection(db,"messages"),{
+    uid:currentUser.uid,
+    email:currentUser.email,
+    message:msg,
+    reply:"",
+    status:"Open",
+    createdAt:serverTimestamp()
+  });
+
+  box.value="";
+}
+
+async function loadInvestor(user){
+  currentUser=user;
+
+  const snap=await getDoc(doc(db,"investors",user.uid));
+
+  if(!snap.exists()){
+    alert("Investor profile not approved yet.");
+    await signOut(auth);
+    return;
+  }
+
+  const d=snap.data();
+
+  document.getElementById("loginBox").style.display="none";
+  document.getElementById("dashboard").style.display="block";
+
+  document.getElementById("welcomeName").innerText="Welcome, "+(d.name || user.email);
+  document.getElementById("userEmail").innerText=user.email;
+  document.getElementById("totalInvestment").innerText=money(d.totalInvestment);
+  document.getElementById("currentValue").innerText=money(d.currentValue);
+  document.getElementById("totalReturns").innerText=money(d.totalReturns);
+  document.getElementById("kycStatus").innerText=d.kycStatus || "Not Submitted";
+
+  setupReport("report1",d.report1);
+  setupReport("report2",d.report2);
+  setupReport("report3",d.report3);
+  setupReport("report4",d.report4);
+
+  if(chart) chart.destroy();
+
+  chart=new Chart(document.getElementById("growthChart"),{
+    type:"line",
+    data:{
+      labels:["Investment","Current Value","Returns"],
+      datasets:[{
+        label:"Portfolio",
+        data:[Number(d.totalInvestment||0),Number(d.currentValue||0),Number(d.totalReturns||0)],
+        borderColor:"#d7a947",
+        backgroundColor:"rgba(215,169,71,.18)",
+        fill:true,
+        tension:.4
+      }]
+    },
+    options:{
+      plugins:{legend:{labels:{color:"#fff"}}},
+      scales:{
+        x:{ticks:{color:"#aaa"},grid:{color:"#222"}},
+        y:{ticks:{color:"#aaa"},grid:{color:"#222"}}
+      }
+    }
+  });
+
+  listenAdminStatus();
+  listenMessages();
+}
+
+window.login=async function(){
+  try{
+    const res=await signInWithEmailAndPassword(
+      auth,
+      document.getElementById("email").value,
+      document.getElementById("password").value
+    );
+
+    loadInvestor(res.user);
+  }catch(e){
+    document.getElementById("loginMessage").innerText="Access denied. Check email/password.";
+  }
+}
+
+window.logout=async function(){
+  if(unsubMessages) unsubMessages();
+  if(unsubStatus) unsubStatus();
+
+  await signOut(auth);
+
+  document.getElementById("dashboard").style.display="none";
+  document.getElementById("loginBox").style.display="block";
+}
+
+onAuthStateChanged(auth,user=>{
+  if(user) loadInvestor(user);
+});
+</script>
+
+</body>
+</html>
