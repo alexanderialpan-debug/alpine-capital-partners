@@ -8,8 +8,11 @@
 
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#d7a947">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Alpine Capital">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<link rel="icon" href="favicon.svg.png">
+<link rel="icon" href="favicon.svg">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
@@ -17,43 +20,27 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-
 body{
-  font-family:Inter;
+  font-family:Inter,Arial,sans-serif;
   background:radial-gradient(circle at top,#1a1308,#050505 40%,#000);
   color:#fff;
 }
-
-/* APP CONTAINER */
-.app{
-  max-width:520px;
-  margin:auto;
-  min-height:100vh;
-  padding:20px;
-}
-
-/* LOGO */
+.app{max-width:520px;margin:auto;min-height:100vh;padding:20px}
 .logo{text-align:center;margin:20px 0}
-.logo img{height:85px}
-
-/* CARDS */
+.logo img{height:85px;filter:drop-shadow(0 0 20px rgba(215,169,71,.35))}
 .card{
   background:rgba(15,15,15,.9);
   border:1px solid rgba(215,169,71,.25);
   padding:22px;
   margin:16px 0;
   border-radius:22px;
-  backdrop-filter:blur(18px);
   box-shadow:0 25px 80px rgba(0,0,0,.7);
 }
-
-/* LOGIN */
-.login-title{
-  font-size:28px;
-  font-weight:900;
-}
-
-/* INPUT */
+h1,h2,h3{margin-bottom:10px}
+p{color:#bbb;line-height:1.6}
+.gold{color:#d7a947}
+.green{color:#25d366}
+.small{color:#d7a947;text-transform:uppercase;letter-spacing:3px;font-size:11px;font-weight:900}
 input,textarea{
   width:100%;
   padding:14px;
@@ -63,8 +50,7 @@ input,textarea{
   color:white;
   border-radius:14px;
 }
-
-/* BUTTON */
+textarea{min-height:70px}
 button{
   width:100%;
   padding:14px;
@@ -74,63 +60,21 @@ button{
   font-weight:900;
   border-radius:14px;
   letter-spacing:1px;
+  text-transform:uppercase;
+  margin-top:8px;
 }
-
-/* DASHBOARD */
 .dashboard{display:none}
-
-/* HEADER */
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:10px;
-}
-
-.topbar h2{
-  font-size:20px;
-}
-
-.logout{
-  font-size:12px;
-  color:#d7a947;
-  cursor:pointer;
-}
-
-/* STATS GRID */
-.stats{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:15px;
-}
-
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.logout{font-size:12px;color:#d7a947;cursor:pointer;font-weight:900}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:15px}
 .stat{
   background:#0a0a0a;
   padding:16px;
   border-radius:16px;
   border:1px solid rgba(215,169,71,.2);
 }
-
-.stat small{
-  font-size:10px;
-  text-transform:uppercase;
-  color:#999;
-  font-weight:900;
-}
-
-.stat strong{
-  display:block;
-  font-size:20px;
-  margin-top:6px;
-}
-
-/* CHART */
-.chart-box{
-  margin-top:10px;
-}
-
-/* CHAT */
+.stat small{font-size:10px;text-transform:uppercase;color:#999;font-weight:900}
+.stat strong{display:block;font-size:20px;margin-top:6px}
 .chat-window{
   height:320px;
   overflow:auto;
@@ -139,34 +83,34 @@ button{
   padding:12px;
   border:1px solid rgba(215,169,71,.2);
 }
-
 .bubble{
   max-width:80%;
   padding:12px;
   margin:8px 0;
   border-radius:14px;
   font-size:14px;
+  line-height:1.5;
 }
-
 .user{
   margin-left:auto;
   background:linear-gradient(135deg,#d7a947,#f4df9a);
   color:#000;
 }
-
 .admin{
   margin-right:auto;
   background:#1a1a1a;
+  border:1px solid rgba(215,169,71,.2);
 }
-
-/* SEND */
-textarea{
-  min-height:70px;
+.bubble small{display:block;font-size:10px;opacity:.65;margin-top:5px}
+a{color:#d7a947;text-decoration:none;font-weight:800}
+.status-dot{
+  display:inline-block;
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#25d366;
+  margin-right:7px;
 }
-
-/* GOLD TEXT */
-.gold{color:#d7a947}
-
 </style>
 </head>
 
@@ -174,61 +118,78 @@ textarea{
 
 <div class="app">
 
-<!-- LOGO -->
-<div class="logo">
-  <img src="logo.png">
+  <div class="logo">
+    <img src="logo.png">
+  </div>
+
+  <div id="loginBox" class="card">
+    <p class="small">Investor Mobile Portal</p>
+    <h1>Private Investor Access</h1>
+    <p class="gold">Alpine Capital Partners</p>
+
+    <input id="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+
+    <button onclick="login()">Login</button>
+    <p id="loginMessage"></p>
+  </div>
+
+  <div id="dashboard" class="dashboard">
+
+    <div class="topbar">
+      <h2 id="welcomeName">Welcome</h2>
+      <div class="logout" onclick="logout()">Logout</div>
+    </div>
+
+    <p id="userEmail"></p>
+
+    <div class="stats">
+      <div class="stat"><small>Investment</small><strong id="totalInvestment">$0</strong></div>
+      <div class="stat"><small>Value</small><strong id="currentValue">$0</strong></div>
+      <div class="stat"><small>Returns</small><strong id="totalReturns" class="green">$0</strong></div>
+      <div class="stat"><small>KYC</small><strong id="kycStatus">Pending</strong></div>
+    </div>
+
+    <div class="card">
+      <h3>Portfolio Growth</h3>
+      <canvas id="chart"></canvas>
+    </div>
+
+    <div class="card">
+      <h3>Identity Verification</h3>
+      <p>Please upload a clear passport or identity document. Review may take 3–5 business days.</p>
+      <input type="file" id="passportFile" accept="image/jpeg,image/png,application/pdf">
+      <button onclick="uploadPassport()">Upload ID</button>
+      <p id="passportStatus"></p>
+    </div>
+
+    <div class="card">
+      <h3>Secure Chat</h3>
+      <p id="adminOnlineStatus">Checking admin status...</p>
+
+      <div id="chat" class="chat-window"></div>
+
+      <textarea id="msg" placeholder="Write message..."></textarea>
+      <button onclick="send()">Send</button>
+    </div>
+
+    <div class="card">
+      <h3>Documents</h3>
+      <p><a id="report1" target="_blank">Investment Summary</a></p>
+      <p><a id="report2" target="_blank">Monthly Statement</a></p>
+      <p><a id="report3" target="_blank">Tax Report</a></p>
+      <p><a id="report4" target="_blank">Agreement / Terms</a></p>
+    </div>
+
+  </div>
+
 </div>
 
-<!-- LOGIN -->
-<div id="loginBox" class="card">
-  <div class="login-title">Private Investor Access</div>
-  <p class="gold">Alpine Capital Partners</p>
-
-  <input id="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Password">
-
-  <button onclick="login()">Login</button>
-  <p id="loginMessage"></p>
-</div>
-
-<!-- DASHBOARD -->
-<div id="dashboard" class="dashboard">
-
-  <div class="topbar">
-    <h2 id="welcomeName">Welcome</h2>
-    <div class="logout" onclick="logout()">Logout</div>
-  </div>
-
-  <p id="userEmail"></p>
-
-  <!-- STATS -->
-  <div class="stats">
-    <div class="stat"><small>Investment</small><strong id="totalInvestment">$0</strong></div>
-    <div class="stat"><small>Value</small><strong id="currentValue">$0</strong></div>
-    <div class="stat"><small>Returns</small><strong id="totalReturns">$0</strong></div>
-    <div class="stat"><small>KYC</small><strong id="kycStatus">Pending</strong></div>
-  </div>
-
-  <!-- CHART -->
-  <div class="card chart-box">
-    <canvas id="chart"></canvas>
-  </div>
-
-  <!-- CHAT -->
-  <div class="card">
-    <h3>Secure Chat</h3>
-
-    <div id="chat" class="chat-window"></div>
-
-    <textarea id="msg" placeholder="Write message..."></textarea>
-    <button onclick="send()">Send</button>
-  </div>
-
-</div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc, collection, addDoc, updateDoc, query, where, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDplPf7cJQ9wK7FHM2NGexjNQegH1IPYHk",
@@ -243,10 +204,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 let currentUser = null;
 let chartInstance = null;
 let unsubscribeChat = null;
+let unsubscribeStatus = null;
 
 function money(value){
   return "$" + Number(value || 0).toLocaleString();
@@ -260,6 +223,18 @@ function timeText(timestamp){
     hour: "2-digit",
     minute: "2-digit"
   });
+}
+
+function setupReport(id, link){
+  const el = document.getElementById(id);
+  if(link){
+    el.href = link;
+    el.style.color = "#d7a947";
+  }else{
+    el.href = "#";
+    el.innerText = el.innerText + " - Not Uploaded";
+    el.style.color = "#777";
+  }
 }
 
 window.login = async function(){
@@ -293,6 +268,12 @@ async function loadInvestor(user){
 
   const data = snap.data();
 
+  if(data.status === "Pending"){
+    alert("Your account is under review. Access will be granted once approved.");
+    await signOut(auth);
+    return;
+  }
+
   document.getElementById("loginBox").style.display = "none";
   document.getElementById("dashboard").style.display = "block";
 
@@ -304,8 +285,14 @@ async function loadInvestor(user){
   document.getElementById("totalReturns").innerText = money(data.totalReturns);
   document.getElementById("kycStatus").innerText = data.kycStatus || "Not Submitted";
 
+  setupReport("report1", data.report1);
+  setupReport("report2", data.report2);
+  setupReport("report3", data.report3);
+  setupReport("report4", data.report4);
+
   renderChart(data);
   listenChat();
+  listenAdminStatus();
 }
 
 function renderChart(data){
@@ -335,20 +322,35 @@ function renderChart(data){
     options: {
       animation: { duration: 1600 },
       plugins: {
-        legend: {
-          labels: { color: "#fff" }
-        }
+        legend: { labels: { color: "#fff" } }
       },
       scales: {
-        x: {
-          ticks: { color: "#aaa" },
-          grid: { color: "#222" }
-        },
-        y: {
-          ticks: { color: "#aaa" },
-          grid: { color: "#222" }
-        }
+        x: { ticks: { color: "#aaa" }, grid: { color: "#222" } },
+        y: { ticks: { color: "#aaa" }, grid: { color: "#222" } }
       }
+    }
+  });
+}
+
+function listenAdminStatus(){
+  const el = document.getElementById("adminOnlineStatus");
+
+  if(unsubscribeStatus){
+    unsubscribeStatus();
+  }
+
+  unsubscribeStatus = onSnapshot(doc(db, "settings", "adminStatus"), snap => {
+    if(!snap.exists()){
+      el.innerText = "Admin offline";
+      return;
+    }
+
+    const data = snap.data();
+
+    if(data.status === "Online"){
+      el.innerHTML = '<span class="status-dot"></span>Admin online';
+    }else{
+      el.innerText = "Admin offline" + (data.lastOnline ? " • Last seen " + timeText(data.lastOnline) : "");
     }
   });
 }
@@ -414,9 +416,54 @@ window.send = async function(){
   box.value = "";
 };
 
+window.uploadPassport = async function(){
+  const file = document.getElementById("passportFile").files[0];
+
+  if(!file || !currentUser){
+    document.getElementById("passportStatus").innerText = "Please select a JPG, PNG, or PDF file.";
+    return;
+  }
+
+  const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
+
+  if(!allowedTypes.includes(file.type)){
+    document.getElementById("passportStatus").innerText = "Only JPG, PNG, or PDF files are accepted.";
+    return;
+  }
+
+  document.getElementById("passportStatus").innerText = "Uploading securely...";
+
+  try{
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    const fileRef = ref(storage, `kyc/${currentUser.uid}/${Date.now()}-${safeName}`);
+
+    await uploadBytes(fileRef, file, {contentType:file.type});
+    const url = await getDownloadURL(fileRef);
+
+    await updateDoc(doc(db, "investors", currentUser.uid), {
+      passportUrl: url,
+      passportFileName: safeName,
+      passportFileType: file.type,
+      kycStatus: "Submitted - Under Review",
+      kycSubmittedAt: serverTimestamp()
+    });
+
+    document.getElementById("passportStatus").innerText = "Submitted successfully. Review may take 3–5 business days.";
+    document.getElementById("kycStatus").innerText = "Submitted - Under Review";
+
+  }catch(error){
+    document.getElementById("passportStatus").innerText = "Upload failed. Check Storage rules.";
+    console.error(error);
+  }
+};
+
 window.logout = async function(){
   if(unsubscribeChat){
     unsubscribeChat();
+  }
+
+  if(unsubscribeStatus){
+    unsubscribeStatus();
   }
 
   await signOut(auth);
@@ -439,6 +486,5 @@ if ("serviceWorker" in navigator) {
 }
 </script>
 
-</div>
 </body>
 </html>
