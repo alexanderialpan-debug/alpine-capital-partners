@@ -5,7 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alpine Capital Partners</title>
 
-<link rel="icon" href="favicon.svg.png" type="image/svg+xml">
+<meta name="description" content="Alpine Capital Partners is a private real estate investment firm based in Melbourne focused on disciplined real asset opportunities and long-term capital growth.">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Alpine Capital Partners">
+<meta property="og:title" content="Alpine Capital Partners">
+<meta property="og:description" content="Private real estate investment firm focused on long-term capital growth.">
+<meta property="og:url" content="https://www.alpinecapitalpartners.com.au/">
+<meta property="og:type" content="website">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -20,70 +28,63 @@ body{background:#050505;color:#fff;font-family:Inter,Arial,sans-serif;overflow-x
 h1,h2,h3{font-family:"Cormorant Garamond",serif}
 p{color:#cfcfcf;line-height:1.7}
 a{text-decoration:none;color:inherit}
-.gold{color:#d7a947}
-.green{color:#25d366}
-.red{color:#ff6b6b}
+.gold{color:#d7a947}.green{color:#25d366}.red{color:#ff6b6b}
 .small{color:#d7a947;text-transform:uppercase;letter-spacing:4px;font-size:12px;font-weight:800}
-.fade{opacity:0;transform:translateY(35px);transition:1s}
-.fade.show{opacity:1;transform:translateY(0)}
+.fade{opacity:0;transform:translateY(35px);transition:1s}.fade.show{opacity:1;transform:translateY(0)}
+
 header{position:fixed;top:0;width:100%;height:92px;z-index:999;background:rgba(0,0,0,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(215,169,71,.35);display:flex;align-items:center;justify-content:space-between;padding:0 70px}
 .logo img{height:76px;width:auto;filter:drop-shadow(0 0 18px rgba(215,169,71,.25))}
 nav a{margin-left:24px;font-size:12px;text-transform:uppercase;color:#ddd;font-weight:800}
 nav a:hover{color:#d7a947}
+
 .hero{min-height:100vh;display:flex;align-items:center;padding:140px 80px;background:linear-gradient(90deg,#050505 0%,rgba(0,0,0,.78) 45%,rgba(0,0,0,.18)),url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=90") center/cover}
-.hero h1{font-size:96px;line-height:.9;margin:20px 0}
-.hero p{max-width:650px;font-size:20px}
+.hero h1{font-size:96px;line-height:.9;margin:20px 0}.hero p{max-width:650px;font-size:20px}
 .btn,button{display:inline-block;padding:16px 30px;background:linear-gradient(135deg,#f7df95,#d7a947);color:#000;font-weight:900;text-transform:uppercase;border:0;cursor:pointer;width:100%;margin-top:12px}
 .btn{width:auto;margin-top:28px}
-.danger{background:#9b1c1c!important;color:white!important}
-.approve{background:#1f8f4d!important;color:white!important}
-.reject{background:#7a3b00!important;color:white!important}
+.danger{background:#9b1c1c!important;color:white!important}.approve{background:#1f8f4d!important;color:white!important}.reject{background:#7a3b00!important;color:white!important}
+
 .strip{display:grid;grid-template-columns:repeat(4,1fr);background:#090909;border-top:1px solid rgba(215,169,71,.35);border-bottom:1px solid rgba(215,169,71,.35)}
-.strip div{padding:40px;border-right:1px solid #222}
-.strip h3{color:#d7a947;margin-bottom:12px}
-.section{padding:110px 80px;text-align:center}
-.dark{background:#080808}
-.section h2{font-size:56px;margin:15px 0 25px}
+.strip div{padding:40px;border-right:1px solid #222}.strip h3{color:#d7a947;margin-bottom:12px}
+.section{padding:110px 80px;text-align:center}.dark{background:#080808}.section h2{font-size:56px;margin:15px 0 25px}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:45px}
 .card{background:linear-gradient(145deg,#111,#070707);border:1px solid rgba(215,169,71,.25);padding:35px;text-align:left;transition:.35s}
 .card:hover{transform:translateY(-8px);border-color:#d7a947;box-shadow:0 25px 80px rgba(0,0,0,.8)}
-.card h3{color:#d7a947;margin-bottom:12px}
-.card p{font-size:14px;color:#bbb;margin:6px 0}
+.card h3{color:#d7a947;margin-bottom:12px}.card p{font-size:14px;color:#bbb;margin:6px 0}
+
 .portal{padding:120px 80px;background:linear-gradient(90deg,rgba(0,0,0,.92),rgba(0,0,0,.76)),url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1800&q=90") center/cover}
 .portal-box,.dashboard{max-width:1150px;margin:auto;background:rgba(10,10,10,.94);border:1px solid rgba(215,169,71,.42);padding:45px;box-shadow:0 40px 100px rgba(0,0,0,.7)}
 .login-inner{max-width:480px;margin:auto}
 input,textarea,select{width:100%;padding:16px;margin:10px 0;background:#050505;border:1px solid #333;color:white}
-textarea{min-height:130px}
-.dashboard,.admin{display:none}
+textarea{min-height:130px}.dashboard,.admin{display:none}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:35px}
-.stat{background:#111;border:1px solid rgba(215,169,71,.3);padding:26px}
-.stat strong{display:block;font-size:30px;margin-top:10px}
-.transactions,.reports,.investor-notes,.lead-box,.kyc-box,.kyc-warning{margin-top:45px;background:#0b0b0b;border:1px solid rgba(215,169,71,.3);padding:30px;text-align:left}
+.stat{background:#111;border:1px solid rgba(215,169,71,.3);padding:26px}.stat strong{display:block;font-size:30px;margin-top:10px}
+
+.transactions,.reports,.investor-notes,.lead-box,.kyc-box,.kyc-warning,.message-box{margin-top:45px;background:#0b0b0b;border:1px solid rgba(215,169,71,.3);padding:30px;text-align:left}
 .kyc-warning{border-color:#9b6a1a;background:rgba(80,50,0,.25)}
 .transaction-row,.report-row,.lead-row{display:grid;grid-template-columns:1fr 160px 120px;gap:20px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.08)}
-.report-row{grid-template-columns:1fr 160px}
-.lead-row{grid-template-columns:1fr}
+.report-row{grid-template-columns:1fr 160px}.lead-row{grid-template-columns:1fr}
 .transaction-row:last-child,.report-row:last-child,.lead-row:last-child{border-bottom:0}
 .transaction-row small,.report-row a{color:#d7a947;text-transform:uppercase;font-weight:900}
 .report-row a.disabled{color:#666;pointer-events:none}
+.message-row{padding:18px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.message-row:last-child{border-bottom:0}.message-row strong{color:#d7a947}.message-row small{color:#999}.reply-box{margin-top:15px}
+
 .admin-card{background:#111;border:1px solid rgba(215,169,71,.35);padding:25px;margin-top:22px;text-align:left}
 .admin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:14px}
 .admin-grid-four{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-top:14px}
 .gated-section{display:none}
+
 .founder{display:grid;grid-template-columns:45% 55%;background:linear-gradient(135deg,#050505,#101010);border-top:1px solid rgba(215,169,71,.35)}
 .founder img{width:100%;height:680px;object-fit:cover;object-position:center top}
-.founder div{padding:110px 90px}
-.founder h2{font-size:60px;margin:20px 0}
+.founder div{padding:110px 90px}.founder h2{font-size:60px;margin:20px 0}
 .contact{padding:100px 80px;text-align:center;background:#060606}
 .contact-form{max-width:720px;margin:35px auto 0;background:#0b0b0b;border:1px solid rgba(215,169,71,.3);padding:30px;text-align:left}
 .disclaimer{padding:70px 80px;background:#030303;border-top:1px solid rgba(215,169,71,.25);font-size:13px;text-align:center}
 .disclaimer p{max-width:1000px;margin:auto;color:#999}
 footer{text-align:center;padding:45px;border-top:1px solid rgba(215,169,71,.35);background:#030303}
+
 @media(max-width:900px){
-nav{display:none}
-header{padding:0 22px}
-.hero{padding:120px 28px}
-.hero h1{font-size:56px}
+nav{display:none}header{padding:0 22px}.hero{padding:120px 28px}.hero h1{font-size:56px}
 .strip,.cards,.stats,.founder,.admin-grid,.admin-grid-four,.transaction-row,.report-row{grid-template-columns:1fr}
 .section,.portal,.contact,.founder div,.disclaimer{padding:65px 28px}
 }
@@ -131,7 +132,6 @@ header{padding:0 22px}
   <p class="small">Our Strategy</p>
   <h2>A Disciplined, Institutional Investment Strategy</h2>
   <p>We apply a structured, data-driven approach to acquiring and managing real estate assets. Our focus is on capital preservation, risk-adjusted returns, and long-term value creation.</p>
-
   <div class="cards">
     <div class="card"><h3>Acquisition</h3><p>Identify high-quality assets in strategic locations with strong fundamentals, growth potential, and downside protection.</p></div>
     <div class="card"><h3>Asset Management</h3><p>Actively manage assets to enhance operational performance, optimize cash flow, and maintain long-term stability.</p></div>
@@ -144,43 +144,11 @@ header{padding:0 22px}
   <p class="small">Portfolio</p>
   <h2>Pipeline Opportunities</h2>
   <p>Illustrative pipeline opportunities structured for long-term performance and capital growth.</p>
-
   <div class="cards">
-    <div class="card">
-      <h3>Melbourne CBD Off-the-Plan Building</h3>
-      <p>Melbourne CBD, VIC</p>
-      <p><strong>Type:</strong> Residential Development</p>
-      <p><strong>Strategy:</strong> Off-the-Plan Development</p>
-      <p><strong>Target IRR:</strong> 15%</p>
-      <p><strong>Project Value:</strong> $10M</p>
-    </div>
-
-    <div class="card">
-      <h3>Docklands Residential Project</h3>
-      <p>Melbourne, VIC</p>
-      <p><strong>Type:</strong> Residential Development</p>
-      <p><strong>Strategy:</strong> Development</p>
-      <p><strong>Target IRR:</strong> 15%</p>
-      <p><strong>Project Value:</strong> $10M</p>
-    </div>
-
-    <div class="card">
-      <h3>Southbank Residential Project</h3>
-      <p>Melbourne, VIC</p>
-      <p><strong>Type:</strong> Residential Development</p>
-      <p><strong>Strategy:</strong> Development</p>
-      <p><strong>Target IRR:</strong> 15–18%</p>
-      <p><strong>Status:</strong> Pipeline</p>
-    </div>
-
-    <div class="card">
-      <h3>La Trobe Street CBD Opportunity</h3>
-      <p>Melbourne CBD, VIC</p>
-      <p><strong>Type:</strong> Mixed-Use / Residential</p>
-      <p><strong>Strategy:</strong> Core+</p>
-      <p><strong>Target IRR:</strong> 15%</p>
-      <p><strong>Status:</strong> Pipeline</p>
-    </div>
+    <div class="card"><h3>Melbourne CBD Off-the-Plan Building</h3><p>Melbourne CBD, VIC</p><p><strong>Type:</strong> Residential Development</p><p><strong>Strategy:</strong> Off-the-Plan Development</p><p><strong>Target IRR:</strong> 15%</p><p><strong>Project Value:</strong> $10M</p></div>
+    <div class="card"><h3>Docklands Residential Project</h3><p>Melbourne, VIC</p><p><strong>Type:</strong> Residential Development</p><p><strong>Strategy:</strong> Development</p><p><strong>Target IRR:</strong> 15%</p><p><strong>Project Value:</strong> $10M</p></div>
+    <div class="card"><h3>Southbank Residential Project</h3><p>Melbourne, VIC</p><p><strong>Type:</strong> Residential Development</p><p><strong>Strategy:</strong> Development</p><p><strong>Target IRR:</strong> 15–18%</p><p><strong>Status:</strong> Pipeline</p></div>
+    <div class="card"><h3>La Trobe Street CBD Opportunity</h3><p>Melbourne CBD, VIC</p><p><strong>Type:</strong> Mixed-Use / Residential</p><p><strong>Strategy:</strong> Core+</p><p><strong>Target IRR:</strong> 15%</p><p><strong>Status:</strong> Pipeline</p></div>
   </div>
 </section>
 
@@ -188,7 +156,6 @@ header{padding:0 22px}
   <p class="small">Investor Onboarding</p>
   <h2>Private Access Process</h2>
   <p>Investor portal access is only provided to approved investors. Identity verification may take 3–5 business days after document submission.</p>
-
   <div class="cards">
     <div class="card"><h3>1. Application</h3><p>Submit your details and investment interest for initial review.</p></div>
     <div class="card"><h3>2. Review</h3><p>We review investor suitability, objectives, and documentation requirements.</p></div>
@@ -238,17 +205,17 @@ header{padding:0 22px}
       <h2>Investor Notes</h2>
       <p id="investorNotes">No notes available.</p>
     </div>
-<div class="message-box">
-  <h2>Contact Alpine Capital Partners</h2>
-  <p id="adminOnlineStatus">Admin status: Checking...</p>
 
-  <textarea id="memberMessage" placeholder="Write your message to admin"></textarea>
-  <button onclick="sendMemberMessage()">Send Message</button>
-  <p id="memberMessageStatus"></p>
+    <div class="message-box">
+      <h2>Contact Alpine Capital Partners</h2>
+      <p id="adminOnlineStatus">Admin status: Checking...</p>
+      <textarea id="memberMessage" placeholder="Write your message to admin"></textarea>
+      <button onclick="sendMemberMessage()">Send Message</button>
+      <p id="memberMessageStatus"></p>
+      <h3 style="margin-top:30px;" class="gold">Conversation History</h3>
+      <div id="memberMessageList"></div>
+    </div>
 
-  <h3 style="margin-top:30px;" class="gold">Conversation History</h3>
-  <div id="memberMessageList"></div>
-</div>
     <div class="kyc-box">
       <h2>Identity Verification</h2>
       <p>Please upload a clear passport or identity document. JPG, PNG, or PDF only. Review may take 3–5 business days.</p>
@@ -281,6 +248,11 @@ header{padding:0 22px}
       <div class="lead-box">
         <h2>Lead Inbox</h2>
         <div id="leadList"></div>
+      </div>
+
+      <div class="lead-box">
+        <h2>Member Messages</h2>
+        <div id="adminMessageList"></div>
       </div>
     </div>
   </div>
@@ -350,7 +322,8 @@ header{padding:0 22px}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, collection, getDocs, updateDoc, addDoc, deleteDoc, serverTimestamp, query, orderBy, where, setDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-storage.js";
+import { getFirestore, doc, getDoc, collection, getDocs, updateDoc, addDoc, deleteDoc, serverTimestamp, query, orderBy, where, setDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDplPf7cJQ9wK7FHM2NGexjNQegH1IPYHk",
@@ -401,8 +374,140 @@ function renderTransactions(data){
   });
 }
 
+async function updateAdminOnline(){
+  if(currentUser && currentUser.uid === ADMIN_UID){
+    await setDoc(doc(db,"settings","adminStatus"),{
+      status:"Online",
+      lastOnline:serverTimestamp()
+    },{merge:true});
+  }
+}
+
+async function loadAdminStatus(){
+  const statusText = document.getElementById("adminOnlineStatus");
+  if(!statusText) return;
+
+  const snap = await getDoc(doc(db,"settings","adminStatus"));
+
+  if(!snap.exists()){
+    statusText.innerText = "Admin status: Offline";
+    return;
+  }
+
+  const d = snap.data();
+  statusText.innerText = d.status === "Online"
+    ? "Admin status: Online"
+    : "Admin status: Offline";
+}
+
+window.sendMemberMessage = async function(){
+  const box = document.getElementById("memberMessage");
+  const status = document.getElementById("memberMessageStatus");
+  const msg = box.value;
+
+  if(!msg.trim()){
+    status.innerText = "Please write a message first.";
+    return;
+  }
+
+  await addDoc(collection(db,"messages"),{
+    uid:currentUser.uid,
+    email:currentUser.email,
+    message:msg,
+    reply:"",
+    status:"Open",
+    createdAt:serverTimestamp()
+  });
+
+  box.value="";
+  status.innerText="Message sent successfully.";
+  loadMemberMessages();
+}
+
+async function loadMemberMessages(){
+  if(!currentUser) return;
+
+  const list=document.getElementById("memberMessageList");
+  if(!list) return;
+
+  list.innerHTML="";
+
+  const q=await getDocs(query(
+    collection(db,"messages"),
+    where("uid","==",currentUser.uid),
+    orderBy("createdAt","desc")
+  ));
+
+  q.forEach(s=>{
+    const d=s.data();
+    list.innerHTML+=`
+      <div class="message-row">
+        <p><strong>You:</strong> ${d.message || ""}</p>
+        <p><strong>Admin Reply:</strong> ${d.reply || "No reply yet."}</p>
+        <small>Status: ${d.status || "Open"}</small>
+      </div>
+    `;
+  });
+}
+
+async function loadAdminMessages(){
+  const list=document.getElementById("adminMessageList");
+  if(!list) return;
+
+  list.innerHTML="";
+
+  const q=await getDocs(query(collection(db,"messages"),orderBy("createdAt","desc")));
+
+  q.forEach(s=>{
+    const d=s.data();
+    const id=s.id;
+
+    list.innerHTML+=`
+      <div class="message-row">
+        <p><strong>${d.email || "Investor"}</strong></p>
+        <p>${d.message || ""}</p>
+        <p><strong>Reply:</strong> ${d.reply || "No reply yet."}</p>
+
+        <div class="reply-box">
+          <textarea id="reply-${id}" placeholder="Write reply"></textarea>
+          <button onclick="replyMessage('${id}')">Send Reply</button>
+          <button class="danger" onclick="deleteMessage('${id}')">Delete Message</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+window.replyMessage = async function(id){
+  const reply=document.getElementById("reply-"+id).value;
+
+  if(!reply.trim()){
+    alert("Write a reply first.");
+    return;
+  }
+
+  await updateDoc(doc(db,"messages",id),{
+    reply:reply,
+    status:"Replied",
+    repliedAt:serverTimestamp()
+  });
+
+  alert("Reply sent.");
+  loadAdminMessages();
+}
+
+window.deleteMessage = async function(id){
+  if(!confirm("Delete this message?")) return;
+
+  await deleteDoc(doc(db,"messages",id));
+  alert("Message deleted.");
+  loadAdminMessages();
+}
+
 async function loadInvestor(user){
   currentUser = user;
+  await loadAdminStatus();
+
   const snap=await getDoc(doc(db,"investors",user.uid));
   if(!snap.exists()){
     document.getElementById("loginMessage").innerText="Account exists, but investor profile is not approved yet.";
@@ -411,6 +516,13 @@ async function loadInvestor(user){
   }
 
   const d=snap.data();
+
+  if(d.status === "Pending"){
+    alert("Your account is under review. Access will be granted once approved.");
+    await signOut(auth);
+    return;
+  }
+
   const kyc = d.kycStatus || "Not Submitted";
 
   document.getElementById("loginBox").style.display="none";
@@ -437,6 +549,7 @@ async function loadInvestor(user){
   setupReport("report2",d.report2);
   setupReport("report3",d.report3);
   setupReport("report4",d.report4);
+  loadMemberMessages();
 
   if(chart)chart.destroy();
   chart=new Chart(document.getElementById("growthChart"),{
@@ -449,8 +562,10 @@ async function loadInvestor(user){
     document.getElementById("adminPanel").style.display="block";
     document.querySelectorAll(".gated-section").forEach(el=>el.style.display="block");
     document.getElementById("kycWarning").style.display="none";
+    updateAdminOnline();
     loadAdminPanel();
     loadLeads();
+    loadAdminMessages();
   }
 }
 
@@ -610,10 +725,7 @@ window.uploadPassport = async function(){
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
     const fileRef = ref(storage, `kyc/${currentUser.uid}/${Date.now()}-${safeName}`);
 
-    await uploadBytes(fileRef, file, {
-      contentType: file.type
-    });
-
+    await uploadBytes(fileRef, file, {contentType: file.type});
     const url = await getDownloadURL(fileRef);
 
     await updateDoc(doc(db,"investors",currentUser.uid),{
