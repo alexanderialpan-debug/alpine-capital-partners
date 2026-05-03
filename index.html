@@ -18,111 +18,413 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
+:root{
+  --black:#030303;
+  --black2:#080808;
+  --panel:#0d0d0d;
+  --panel2:#121212;
+  --gold:#d7a947;
+  --gold2:#f4df9a;
+  --line:rgba(215,169,71,.28);
+  --text:#ffffff;
+  --muted:#b9b9b9;
+  --glass:rgba(12,12,12,.72);
+}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:#050505;color:#fff;font-family:Inter,Arial,sans-serif;overflow-x:hidden}
+body{
+  background:radial-gradient(circle at top,#17120a 0%,#050505 35%,#000 100%);
+  color:var(--text);
+  font-family:Inter,Arial,sans-serif;
+  overflow-x:hidden;
+}
 h1,h2,h3{font-family:"Cormorant Garamond",serif}
 p{color:#cfcfcf;line-height:1.7}
 a{text-decoration:none;color:inherit}
-.gold{color:#d7a947}.green{color:#25d366}.red{color:#ff6b6b}
-.small{color:#d7a947;text-transform:uppercase;letter-spacing:4px;font-size:12px;font-weight:800}
-.fade{opacity:0;transform:translateY(35px);transition:1s}.fade.show{opacity:1;transform:translateY(0)}
+.gold{color:var(--gold)}
+.green{color:#25d366}
+.red{color:#ff6b6b}
+.small{
+  color:var(--gold);
+  text-transform:uppercase;
+  letter-spacing:4px;
+  font-size:12px;
+  font-weight:900;
+}
+.fade{opacity:0;transform:translateY(35px);transition:1s ease}
+.fade.show{opacity:1;transform:translateY(0)}
 
-header{position:fixed;top:0;width:100%;height:92px;z-index:999;background:rgba(0,0,0,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(215,169,71,.35);display:flex;align-items:center;justify-content:space-between;padding:0 70px}
-.logo img{height:76px;width:auto;filter:drop-shadow(0 0 18px rgba(215,169,71,.25))}
-nav a{margin-left:24px;font-size:12px;text-transform:uppercase;color:#ddd;font-weight:800}
-nav a:hover{color:#d7a947}
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(120deg,transparent 0%,rgba(215,169,71,.04) 45%,transparent 70%);
+  animation:luxurySweep 8s ease-in-out infinite;
+  z-index:0;
+}
+@keyframes luxurySweep{
+  0%{transform:translateX(-60%);opacity:.2}
+  50%{opacity:.75}
+  100%{transform:translateX(60%);opacity:.2}
+}
+header,section,footer{position:relative;z-index:1}
 
-.hero{min-height:100vh;display:flex;align-items:center;padding:140px 80px;background:linear-gradient(90deg,#050505 0%,rgba(0,0,0,.78) 45%,rgba(0,0,0,.18)),url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=90") center/cover}
-.hero h1{font-size:96px;line-height:.9;margin:20px 0}
-.hero p{max-width:650px;font-size:20px}
+header{
+  position:fixed;
+  top:0;
+  width:100%;
+  height:96px;
+  z-index:999;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 78px;
+}
+.logo img{
+  height:78px;
+  width:auto;
+  filter:drop-shadow(0 0 24px rgba(215,169,71,.3));
+}
+nav a{
+  margin-left:26px;
+  font-size:11px;
+  letter-spacing:1.6px;
+  text-transform:uppercase;
+  color:#d8d8d8;
+  font-weight:900;
+}
+nav a:hover{color:var(--gold)}
 
-.btn,button{display:inline-block;padding:16px 30px;background:linear-gradient(135deg,#f7df95,#d7a947);color:#000;font-weight:900;text-transform:uppercase;border:0;cursor:pointer;width:100%;margin-top:12px}
-.btn{width:auto;margin-top:28px}
-.danger{background:#9b1c1c!important;color:white!important}
-.approve{background:#1f8f4d!important;color:white!important}
+.hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  padding:150px 86px;
+  background:
+    linear-gradient(90deg,#030303 0%,rgba(0,0,0,.86) 42%,rgba(0,0,0,.22)),
+    url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=90") center/cover;
+}
+.hero h1{
+  font-size:104px;
+  line-height:.88;
+  margin:22px 0;
+  letter-spacing:-2px;
+  text-shadow:0 18px 80px rgba(0,0,0,.85);
+}
+.hero p{max-width:680px;font-size:20px;color:#ddd}
+
+.btn,button{
+  display:inline-block;
+  padding:16px 30px;
+  background:linear-gradient(135deg,var(--gold2),var(--gold));
+  color:#050505;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:1.2px;
+  border:0;
+  cursor:pointer;
+  width:100%;
+  margin-top:12px;
+  box-shadow:0 18px 45px rgba(215,169,71,.18);
+}
+.btn{width:auto;margin-top:30px}
+button:hover,.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.danger{background:#8f1515!important;color:white!important}
+.approve{background:#197a42!important;color:white!important}
 .reject{background:#7a3b00!important;color:white!important}
 
-.strip{display:grid;grid-template-columns:repeat(4,1fr);background:#090909;border-top:1px solid rgba(215,169,71,.35);border-bottom:1px solid rgba(215,169,71,.35)}
-.strip div{padding:40px;border-right:1px solid #222}
-.strip h3{color:#d7a947;margin-bottom:12px}
+.strip{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  background:#070707;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.strip div{padding:42px;border-right:1px solid rgba(255,255,255,.08)}
+.strip h3{color:var(--gold);margin-bottom:12px}
 
-.section{padding:110px 80px;text-align:center}
-.dark{background:#080808}
-.section h2{font-size:56px;margin:15px 0 25px}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:45px}
-.card{background:linear-gradient(145deg,#111,#070707);border:1px solid rgba(215,169,71,.25);padding:35px;text-align:left;transition:.35s}
-.card:hover{transform:translateY(-8px);border-color:#d7a947;box-shadow:0 25px 80px rgba(0,0,0,.8)}
-.card h3{color:#d7a947;margin-bottom:12px}
-.card p{font-size:14px;color:#bbb;margin:6px 0}
+.section{padding:118px 82px;text-align:center}
+.dark{background:linear-gradient(180deg,#080808,#040404)}
+.section h2{font-size:58px;margin:15px 0 26px}
+.section>p{max-width:920px;margin:auto}
 
-.portal{padding:120px 80px;background:linear-gradient(90deg,rgba(0,0,0,.92),rgba(0,0,0,.76)),url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1800&q=90") center/cover}
-.portal-box,.dashboard{max-width:1150px;margin:auto;background:rgba(10,10,10,.94);border:1px solid rgba(215,169,71,.42);padding:45px;box-shadow:0 40px 100px rgba(0,0,0,.7)}
-.login-inner{max-width:480px;margin:auto}
-input,textarea,select{width:100%;padding:16px;margin:10px 0;background:#050505;border:1px solid #333;color:white}
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:26px;
+  margin-top:48px;
+}
+.card{
+  background:linear-gradient(145deg,rgba(20,20,20,.9),rgba(5,5,5,.92));
+  border:1px solid rgba(215,169,71,.22);
+  padding:38px 32px;
+  text-align:left;
+  transition:.35s;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 20px 60px rgba(0,0,0,.35);
+  backdrop-filter:blur(14px);
+}
+.card:hover{
+  transform:translateY(-9px);
+  border-color:var(--gold);
+  box-shadow:0 30px 95px rgba(0,0,0,.85),0 0 34px rgba(215,169,71,.08);
+}
+.card h3{color:var(--gold);margin-bottom:14px}
+.card p{font-size:14px;color:#bababa;margin:7px 0}
+
+.portal{
+  padding:125px 82px;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.94),rgba(0,0,0,.78)),
+    url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1800&q=90") center/cover;
+}
+.portal-box,.dashboard{
+  max-width:1180px;
+  margin:auto;
+  background:var(--glass);
+  border:1px solid rgba(215,169,71,.42);
+  padding:48px;
+  box-shadow:0 45px 120px rgba(0,0,0,.78),inset 0 1px 0 rgba(255,255,255,.05);
+  backdrop-filter:blur(22px);
+}
+.portal-box{max-width:620px;border-radius:28px}
+.login-inner{max-width:500px;margin:auto}
+.login-inner h2{font-size:48px;margin:14px 0}
+
+input,textarea,select{
+  width:100%;
+  padding:16px;
+  margin:10px 0;
+  background:rgba(0,0,0,.72);
+  border:1px solid rgba(255,255,255,.16);
+  color:white;
+  outline:none;
+}
+input:focus,textarea:focus,select:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(215,169,71,.08);
+}
 textarea{min-height:120px}
 .dashboard,.admin{display:none}
 
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:35px}
-.stat{background:#111;border:1px solid rgba(215,169,71,.3);padding:26px}
-.stat strong{display:block;font-size:30px;margin-top:10px}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+  margin-top:35px;
+}
+.stat{
+  background:linear-gradient(145deg,rgba(18,18,18,.9),rgba(5,5,5,.9));
+  border:1px solid rgba(215,169,71,.25);
+  padding:28px;
+  box-shadow:0 20px 60px rgba(0,0,0,.36);
+}
+.stat small{
+  color:#999;
+  text-transform:uppercase;
+  letter-spacing:1.4px;
+  font-weight:900;
+}
+.stat strong{
+  display:block;
+  font-size:31px;
+  margin-top:12px;
+}
 
-.transactions,.reports,.investor-notes,.lead-box,.kyc-box,.kyc-warning,.message-box{margin-top:45px;background:linear-gradient(145deg,#0d0d0d,#050505);border:1px solid rgba(215,169,71,.3);padding:30px;text-align:left;box-shadow:0 25px 70px rgba(0,0,0,.45)}
-.kyc-warning{border-color:#9b6a1a;background:rgba(80,50,0,.25)}
-.transaction-row,.report-row,.lead-row{display:grid;grid-template-columns:1fr 160px 120px;gap:20px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.08)}
-.report-row{grid-template-columns:1fr 160px}.lead-row{grid-template-columns:1fr}
+.transactions,.reports,.investor-notes,.lead-box,.kyc-box,.kyc-warning,.message-box{
+  margin-top:46px;
+  background:linear-gradient(145deg,rgba(13,13,13,.9),rgba(5,5,5,.88));
+  border:1px solid rgba(215,169,71,.28);
+  padding:32px;
+  text-align:left;
+  box-shadow:0 28px 80px rgba(0,0,0,.52);
+  backdrop-filter:blur(16px);
+}
+.kyc-warning{
+  border-color:#9b6a1a;
+  background:linear-gradient(145deg,rgba(80,50,0,.28),rgba(20,12,0,.25));
+}
+
+.transaction-row,.report-row,.lead-row{
+  display:grid;
+  grid-template-columns:1fr 160px 120px;
+  gap:20px;
+  padding:18px 0;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.report-row{grid-template-columns:1fr 160px}
+.lead-row{grid-template-columns:1fr}
 .transaction-row:last-child,.report-row:last-child,.lead-row:last-child{border-bottom:0}
-.transaction-row small,.report-row a{color:#d7a947;text-transform:uppercase;font-weight:900}
+.transaction-row small,.report-row a{
+  color:var(--gold);
+  text-transform:uppercase;
+  font-weight:900;
+}
 .report-row a.disabled{color:#666;pointer-events:none}
 
-.chat-header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:18px;margin-bottom:18px}
-.status-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#25d366;margin-right:8px;box-shadow:0 0 12px #25d366}
-.chat-window{height:360px;overflow-y:auto;background:rgba(0,0,0,.35);border:1px solid rgba(215,169,71,.18);padding:18px;border-radius:14px}
-.bubble{max-width:78%;padding:13px 15px;margin:10px 0;border-radius:18px;line-height:1.55;font-size:14px;word-wrap:break-word}
-.bubble-user{margin-left:auto;background:linear-gradient(135deg,#d7a947,#f4df9a);color:#000;border-bottom-right-radius:4px}
-.bubble-admin{margin-right:auto;background:#161616;color:#fff;border:1px solid rgba(215,169,71,.18);border-bottom-left-radius:4px}
-.bubble small{display:block;margin-top:6px;font-size:10px;opacity:.7}
-.chat-input{display:grid;grid-template-columns:1fr 160px;gap:12px;margin-top:15px}
+.chat-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding-bottom:18px;
+  margin-bottom:18px;
+}
+.status-dot{
+  display:inline-block;
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#25d366;
+  margin-right:8px;
+  box-shadow:0 0 12px #25d366;
+}
+.chat-window{
+  height:370px;
+  overflow-y:auto;
+  background:rgba(0,0,0,.38);
+  border:1px solid rgba(215,169,71,.18);
+  padding:18px;
+  border-radius:18px;
+}
+.bubble{
+  max-width:78%;
+  padding:13px 15px;
+  margin:10px 0;
+  border-radius:18px;
+  line-height:1.55;
+  font-size:14px;
+  word-wrap:break-word;
+  animation:bubbleIn .22s ease;
+}
+@keyframes bubbleIn{
+  from{opacity:0;transform:translateY(7px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.bubble-user{
+  margin-left:auto;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#000;
+  border-bottom-right-radius:4px;
+}
+.bubble-admin{
+  margin-right:auto;
+  background:#171717;
+  color:#fff;
+  border:1px solid rgba(215,169,71,.18);
+  border-bottom-left-radius:4px;
+}
+.bubble small{
+  display:block;
+  margin-top:6px;
+  font-size:10px;
+  opacity:.72;
+}
+.chat-input{
+  display:grid;
+  grid-template-columns:1fr 160px;
+  gap:12px;
+  margin-top:15px;
+}
 .chat-input textarea{min-height:70px;margin:0}
-.admin-message-card{border-bottom:1px solid rgba(255,255,255,.08);padding:20px 0}
+.admin-message-card{
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding:20px 0;
+}
 .admin-message-card:last-child{border-bottom:0}
 .reply-box{margin-top:15px}
 
-.admin-card{background:#111;border:1px solid rgba(215,169,71,.35);padding:25px;margin-top:22px;text-align:left}
-.admin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:14px}
-.admin-grid-four{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-top:14px}
+.admin-card{
+  background:linear-gradient(145deg,#111,#070707);
+  border:1px solid rgba(215,169,71,.34);
+  padding:26px;
+  margin-top:22px;
+  text-align:left;
+}
+.admin-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:14px;
+}
+.admin-grid-four{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-top:14px;
+}
 .gated-section{display:none}
 
-.founder{display:grid;grid-template-columns:45% 55%;background:linear-gradient(135deg,#050505,#101010);border-top:1px solid rgba(215,169,71,.35)}
-.founder img{width:100%;height:680px;object-fit:cover;object-position:center top}
-.founder div{padding:110px 90px}
-.founder h2{font-size:60px;margin:20px 0}
+.founder{
+  display:grid;
+  grid-template-columns:45% 55%;
+  background:linear-gradient(135deg,#050505,#101010);
+  border-top:1px solid rgba(215,169,71,.35);
+}
+.founder img{
+  width:100%;
+  height:680px;
+  object-fit:cover;
+  object-position:center top;
+}
+.founder div{padding:112px 92px}
+.founder h2{font-size:62px;margin:20px 0}
 
-.contact{padding:100px 80px;text-align:center;background:#060606}
-.contact-form{max-width:720px;margin:35px auto 0;background:#0b0b0b;border:1px solid rgba(215,169,71,.3);padding:30px;text-align:left}
-.disclaimer{padding:70px 80px;background:#030303;border-top:1px solid rgba(215,169,71,.25);font-size:13px;text-align:center}
-.disclaimer p{max-width:1000px;margin:auto;color:#999}
-footer{text-align:center;padding:45px;border-top:1px solid rgba(215,169,71,.35);background:#030303}
+.contact{
+  padding:105px 82px;
+  text-align:center;
+  background:#060606;
+}
+.contact-form{
+  max-width:740px;
+  margin:35px auto 0;
+  background:linear-gradient(145deg,#0d0d0d,#050505);
+  border:1px solid rgba(215,169,71,.3);
+  padding:32px;
+  text-align:left;
+}
+.disclaimer{
+  padding:72px 82px;
+  background:#030303;
+  border-top:1px solid rgba(215,169,71,.25);
+  font-size:13px;
+  text-align:center;
+}
+.disclaimer p{max-width:1050px;margin:auto;color:#999}
+footer{
+  text-align:center;
+  padding:45px;
+  border-top:1px solid rgba(215,169,71,.35);
+  background:#030303;
+}
 
 @media(max-width:900px){
-nav{display:none}
-header{padding:0 22px}
-.hero{padding:120px 28px}
-.hero h1{font-size:56px}
-.strip,.cards,.stats,.founder,.admin-grid,.admin-grid-four,.transaction-row,.report-row,.chat-input{grid-template-columns:1fr}
-.section,.portal,.contact,.founder div,.disclaimer{padding:65px 28px}
+  nav{display:none}
+  header{padding:0 22px;height:86px}
+  .logo img{height:66px}
+  .hero{padding:120px 28px}
+  .hero h1{font-size:56px}
+  .strip,.cards,.stats,.founder,.admin-grid,.admin-grid-four,.transaction-row,.report-row,.chat-input{grid-template-columns:1fr}
+  .section,.portal,.contact,.founder div,.disclaimer{padding:65px 28px}
+  .chat-window{height:330px}
+  .portal-box,.dashboard{padding:30px;border-radius:22px}
 }
 </style>
 </head>
-
 <body>
 
 <header>
-  <div class="logo"><img src="logo.png"></div>
+  <div class="logo">
+    <img src="logo.png">
+  </div>
+
   <nav>
     <a href="#home">Home</a>
     <a href="#about">About</a>
@@ -134,6 +436,7 @@ header{padding:0 22px}
   </nav>
 </header>
 
+<!-- HERO -->
 <section id="home" class="hero">
   <div class="fade">
     <p class="small">Private Real Estate Investment Firm</p>
@@ -143,6 +446,7 @@ header{padding:0 22px}
   </div>
 </section>
 
+<!-- STRIP -->
 <section class="strip fade">
   <div><h3>Disciplined Strategy</h3><p>Focused on sustainable value creation.</p></div>
   <div><h3>Real Assets</h3><p>High-quality real estate opportunities.</p></div>
@@ -150,150 +454,137 @@ header{padding:0 22px}
   <div><h3>Long-Term Growth</h3><p>Patient capital and professional execution.</p></div>
 </section>
 
+<!-- ABOUT -->
 <section id="about" class="section fade">
   <p class="small">About Us</p>
   <h2>Building Value. Delivering Growth.</h2>
   <p>Alpine Capital Partners is a private real estate investment company focused on identifying, structuring, and managing real asset opportunities.</p>
 </section>
 
+<!-- STRATEGY -->
 <section id="strategy" class="section dark fade">
   <p class="small">Our Strategy</p>
   <h2>A Disciplined, Institutional Investment Strategy</h2>
-  <p>We apply a structured, data-driven approach to acquiring and managing real estate assets. Our focus is on capital preservation, risk-adjusted returns, and long-term value creation.</p>
+  <p>We apply a structured, data-driven approach to acquiring and managing real estate assets.</p>
+
   <div class="cards">
-    <div class="card"><h3>Acquisition</h3><p>Identify high-quality assets in strategic locations with strong fundamentals, growth potential, and downside protection.</p></div>
-    <div class="card"><h3>Asset Management</h3><p>Actively manage assets to enhance operational performance, optimize cash flow, and maintain long-term stability.</p></div>
-    <div class="card"><h3>Value Creation</h3><p>Unlock hidden value through repositioning, improvements, and strategic execution across each asset lifecycle.</p></div>
-    <div class="card"><h3>Capital Growth</h3><p>Deliver consistent, long-term capital appreciation through disciplined investment and portfolio management.</p></div>
+    <div class="card"><h3>Acquisition</h3><p>Identify strong assets.</p></div>
+    <div class="card"><h3>Asset Management</h3><p>Optimize performance.</p></div>
+    <div class="card"><h3>Value Creation</h3><p>Unlock hidden value.</p></div>
+    <div class="card"><h3>Capital Growth</h3><p>Deliver long-term returns.</p></div>
   </div>
 </section>
 
+<!-- PORTFOLIO -->
 <section id="portfolio" class="section dark fade">
   <p class="small">Portfolio</p>
   <h2>Pipeline Opportunities</h2>
-  <p>Illustrative pipeline opportunities structured for long-term performance and capital growth.</p>
+
   <div class="cards">
-    <div class="card"><h3>Melbourne CBD Off-the-Plan Building</h3><p>Melbourne CBD, VIC</p><p><strong>Type:</strong> Residential Development</p><p><strong>Strategy:</strong> Off-the-Plan Development</p><p><strong>Target IRR:</strong> 15%</p><p><strong>Project Value:</strong> $10M</p></div>
-    <div class="card"><h3>Docklands Residential Project</h3><p>Melbourne, VIC</p><p><strong>Type:</strong> Residential Development</p><p><strong>Strategy:</strong> Development</p><p><strong>Target IRR:</strong> 15%</p><p><strong>Project Value:</strong> $10M</p></div>
-    <div class="card"><h3>Southbank Residential Project</h3><p>Melbourne, VIC</p><p><strong>Type:</strong> Residential Development</p><p><strong>Strategy:</strong> Development</p><p><strong>Target IRR:</strong> 15–18%</p><p><strong>Status:</strong> Pipeline</p></div>
-    <div class="card"><h3>La Trobe Street CBD Opportunity</h3><p>Melbourne CBD, VIC</p><p><strong>Type:</strong> Mixed-Use / Residential</p><p><strong>Strategy:</strong> Core+</p><p><strong>Target IRR:</strong> 15%</p><p><strong>Status:</strong> Pipeline</p></div>
+    <div class="card">
+      <h3>Melbourne CBD Off-the-Plan</h3>
+      <p>Melbourne, VIC</p>
+      <p><strong>Type:</strong> Residential</p>
+      <p><strong>IRR:</strong> 15%</p>
+    </div>
+
+    <div class="card">
+      <h3>Docklands Project</h3>
+      <p>Melbourne, VIC</p>
+      <p><strong>Type:</strong> Development</p>
+      <p><strong>IRR:</strong> 15%</p>
+    </div>
+
+    <div class="card">
+      <h3>Southbank Opportunity</h3>
+      <p>Melbourne, VIC</p>
+      <p><strong>Status:</strong> Pipeline</p>
+    </div>
+
+    <div class="card">
+      <h3>CBD Mixed-Use</h3>
+      <p>Melbourne, VIC</p>
+      <p><strong>Status:</strong> Pipeline</p>
+    </div>
   </div>
 </section>
 
+<!-- ONBOARDING -->
 <section id="onboarding" class="section fade">
   <p class="small">Investor Onboarding</p>
   <h2>Private Access Process</h2>
-  <p>Investor portal access is only provided to approved investors. Identity verification may take 3–5 business days after document submission.</p>
+
   <div class="cards">
-    <div class="card"><h3>1. Application</h3><p>Submit your details and investment interest for initial review.</p></div>
-    <div class="card"><h3>2. Review</h3><p>We review investor suitability, objectives, and documentation requirements.</p></div>
-    <div class="card"><h3>3. Identity Verification</h3><p>Approved applicants submit identity documents securely through the portal.</p></div>
-    <div class="card"><h3>4. Final Approval</h3><p>Admin confirms documents and activates full investor access.</p></div>
+    <div class="card"><h3>1. Apply</h3></div>
+    <div class="card"><h3>2. Review</h3></div>
+    <div class="card"><h3>3. Verify</h3></div>
+    <div class="card"><h3>4. Access</h3></div>
   </div>
 </section>
 
+<!-- PORTAL -->
 <section id="portal" class="portal fade">
+
+  <!-- LOGIN -->
   <div id="loginBox" class="portal-box">
     <div class="login-inner">
       <p class="small">Investor Portal</p>
-      <h2>Approved Investor Access</h2>
-      <p>Secure access for approved investors only.</p>
+      <h2>Private Access</h2>
+
       <input id="email" placeholder="Email">
       <input id="password" type="password" placeholder="Password">
+
       <button onclick="login()">Login</button>
       <p id="loginMessage"></p>
     </div>
   </div>
 
+  <!-- DASHBOARD -->
   <div id="dashboard" class="dashboard">
-    <p class="small">Investor Dashboard</p>
+
+    <p class="small">Dashboard</p>
     <h2 id="welcomeName">Welcome</h2>
     <p id="userEmail"></p>
 
+    <!-- STATS -->
     <div class="stats">
-      <div class="stat"><small>Investor Tier</small><strong id="investorTier">Standard</strong></div>
-      <div class="stat"><small>Total Investment</small><strong id="totalInvestment">$0</strong></div>
-      <div class="stat"><small>Current Value</small><strong id="currentValue">$0</strong></div>
-      <div class="stat"><small>Total Returns</small><strong id="totalReturns" class="green">$0</strong></div>
+      <div class="stat"><small>Investment</small><strong id="totalInvestment">$0</strong></div>
+      <div class="stat"><small>Value</small><strong id="currentValue">$0</strong></div>
+      <div class="stat"><small>Returns</small><strong id="totalReturns">$0</strong></div>
+      <div class="stat"><small>Yield</small><strong id="monthlyYield">0%</strong></div>
     </div>
 
-    <div class="stats">
-      <div class="stat"><small>Payment Due</small><strong id="paymentDue">$0</strong></div>
-      <div class="stat"><small>Total Return %</small><strong id="returnPercent" class="green">0%</strong></div>
-      <div class="stat"><small>Monthly Yield</small><strong id="monthlyYield">0%</strong></div>
-      <div class="stat"><small>KYC Status</small><strong id="kycStatus">Not Submitted</strong></div>
-    </div>
-
-    <div id="kycWarning" class="kyc-warning">
-      <h2>Verification Required</h2>
-      <p>Your account is currently limited. Please submit your passport or identity document. Review may take 3–5 business days. Once approved, your full investor dashboard, reports, and transaction history will unlock.</p>
-    </div>
-
-    <div class="investor-notes">
-      <h2>Investor Notes</h2>
-      <p id="investorNotes">No notes available.</p>
-    </div>
-
+    <!-- CHAT -->
     <div class="message-box">
+
       <div class="chat-header">
-        <div>
-          <h2>Secure Member Chat</h2>
-          <p id="adminOnlineStatus">Checking admin status...</p>
-        </div>
-        <span class="small">Live</span>
+        <h2>Secure Chat</h2>
+        <span id="adminOnlineStatus">Checking...</span>
       </div>
 
       <div id="memberMessageList" class="chat-window"></div>
 
       <div class="chat-input">
-        <textarea id="memberMessage" placeholder="Write your message..."></textarea>
+        <textarea id="memberMessage" placeholder="Write message..."></textarea>
         <button onclick="sendMemberMessage()">Send</button>
       </div>
-      <p id="memberMessageStatus"></p>
+
     </div>
 
-    <div class="kyc-box">
-      <h2>Identity Verification</h2>
-      <p>Please upload a clear passport or identity document. JPG, PNG, or PDF only. Review may take 3–5 business days.</p>
-      <input type="file" id="passportFile" accept="image/jpeg,image/png,application/pdf">
-      <button onclick="uploadPassport()">Submit Passport / ID</button>
-      <p id="passportStatus"></p>
-    </div>
+    <canvas id="growthChart" style="margin-top:30px;"></canvas>
 
-    <div class="transactions gated-section">
-      <h2>Transaction History</h2>
-      <div id="transactionList"></div>
-    </div>
-
-    <div class="reports gated-section">
-      <h2>Documents & Reports</h2>
-      <div class="report-row"><span>Investment Summary</span><a id="report1" target="_blank">View</a></div>
-      <div class="report-row"><span>Monthly Statement</span><a id="report2" target="_blank">View</a></div>
-      <div class="report-row"><span>Tax Report</span><a id="report3" target="_blank">View</a></div>
-      <div class="report-row"><span>Agreement / Terms</span><a id="report4" target="_blank">View</a></div>
-    </div>
-
-    <canvas id="growthChart" class="gated-section" style="margin-top:40px;"></canvas>
     <button onclick="logout()">Logout</button>
 
+    <!-- ADMIN -->
     <div id="adminPanel" class="admin">
-      <p class="small">Admin Control</p>
-      <h2>Investor Management</h2>
-      <div id="investorList"></div>
-
-      <div class="lead-box">
-        <h2>Lead Inbox</h2>
-        <div id="leadList"></div>
-      </div>
-
-      <div class="lead-box">
-        <h2>Member Messages</h2>
-        <div id="adminMessageList"></div>
-      </div>
+      <h2>Admin Panel</h2>
+      <div id="adminMessageList"></div>
     </div>
-  </div>
-</section>
 
+  </div>
+
+</section>
+<!-- FOUNDER -->
 <section class="founder fade">
   <img src="ceo.jpg.png">
   <div>
@@ -304,10 +595,12 @@ header{padding:0 22px}
   </div>
 </section>
 
+<!-- DISCLAIMER -->
 <section class="disclaimer fade">
-  <p><strong>Important Notice:</strong> This website is general information only and does not constitute financial advice, legal advice, investment advice, or an offer to the public. Identity documents are sensitive information and should only be submitted after you are comfortable with Alpine Capital Partners’ privacy handling process. Investors should obtain independent legal, financial, and tax advice before making any decision.</p>
+  <p><strong>Important Notice:</strong> This website is general information only and does not constitute financial advice, legal advice, investment advice, or an offer to the public. Investors should obtain independent legal, financial, and tax advice before making any decision.</p>
 </section>
 
+<!-- CONTACT -->
 <section id="contact" class="contact fade">
   <p class="small">Contact</p>
   <h2>Investor Application</h2>
@@ -317,6 +610,7 @@ header{padding:0 22px}
     <input id="leadName" placeholder="Full Name">
     <input id="leadEmail" placeholder="Email Address">
     <input id="leadPhone" placeholder="Phone Number">
+
     <select id="leadNetWorth">
       <option value="">Net Worth Range</option>
       <option>$0 - $250,000</option>
@@ -325,7 +619,9 @@ header{padding:0 22px}
       <option>$1M - $2.5M</option>
       <option>$2.5M+</option>
     </select>
+
     <input id="leadInvestment" placeholder="Investment Amount">
+
     <select id="leadRisk">
       <option value="">Risk Tolerance</option>
       <option>Conservative</option>
@@ -333,6 +629,7 @@ header{padding:0 22px}
       <option>Growth</option>
       <option>Aggressive</option>
     </select>
+
     <select id="leadExperience">
       <option value="">Experience Level</option>
       <option>Beginner</option>
@@ -340,6 +637,7 @@ header{padding:0 22px}
       <option>Experienced investor</option>
       <option>Professional / sophisticated investor</option>
     </select>
+
     <textarea id="leadMessage" placeholder="Message"></textarea>
     <button onclick="submitLead()">Submit Investor Application</button>
     <p id="leadStatus"></p>
@@ -354,7 +652,6 @@ header{padding:0 22px}
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 import { getFirestore, doc, getDoc, collection, getDocs, updateDoc, addDoc, deleteDoc, serverTimestamp, query, orderBy, where, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDplPf7cJQ9wK7FHM2NGexjNQegH1IPYHk",
@@ -369,105 +666,122 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const storage = getStorage(app);
-const ADMIN_UID = "GiBsDVrlumWZcRXAmP7v7iDvsoE2";
-let chart;
-let currentUser = null;
-let unsubMemberMessages = null;
-let unsubAdminMessages = null;
-let unsubAdminStatus = null;
 
-function money(v){return "$"+Number(v||0).toLocaleString();}
-function percent(v){return Number(v||0).toFixed(2)+"%";}
-function timeText(ts){
-  if(!ts || !ts.toDate) return "";
-  return ts.toDate().toLocaleString("en-AU",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
+const ADMIN_UID = "GiBsDVrlumWZcRXAmP7v7iDvsoE2";
+
+let currentUser = null;
+let chart = null;
+let unsubscribeMemberMessages = null;
+let unsubscribeAdminMessages = null;
+let unsubscribeAdminStatus = null;
+
+function money(value){
+  return "$" + Number(value || 0).toLocaleString();
 }
-function setupReport(id,link){
-  const el=document.getElementById(id);
-  if(link){el.href=link;el.classList.remove("disabled");el.innerText="View";}
-  else{el.href="#";el.classList.add("disabled");el.innerText="Not Uploaded";}
+
+function percent(value){
+  return Number(value || 0).toFixed(2) + "%";
 }
-function applyKycLock(status){
-  const verified = status === "Verified";
-  document.querySelectorAll(".gated-section").forEach(el=>el.style.display = verified ? "block" : "none");
-  document.getElementById("kycWarning").style.display = verified ? "none" : "block";
+
+function timeText(timestamp){
+  if(!timestamp || !timestamp.toDate) return "";
+  return timestamp.toDate().toLocaleString("en-AU",{
+    day:"2-digit",
+    month:"short",
+    hour:"2-digit",
+    minute:"2-digit"
+  });
 }
-function renderTransactions(data){
-  const list=document.getElementById("transactionList");
-  const tx=[
-    {n:data.transaction1Name||"Initial Capital Contribution",a:data.transaction1Amount??250000,s:data.transaction1Status||"Completed"},
-    {n:data.transaction2Name||"Monthly Return Distribution",a:data.transaction2Amount??3750,s:data.transaction2Status||"Paid"},
-    {n:data.transaction3Name||"Management Fee",a:data.transaction3Amount??-750,s:data.transaction3Status||"Processed"},
-    {n:data.transaction4Name||"Upcoming Payment Due",a:data.transaction4Amount??5250,s:data.transaction4Status||"Pending"}
-  ];
-  list.innerHTML="";
-  tx.forEach(t=>list.innerHTML+=`<div class="transaction-row"><span>${t.n}</span><strong class="${Number(t.a)>0?'green':''}">${money(t.a)}</strong><small>${t.s}</small></div>`);
+
+function animateValue(id, finalText){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.style.opacity = "0.35";
+  setTimeout(()=>{
+    el.innerText = finalText;
+    el.style.opacity = "1";
+  },120);
 }
 
 async function updateAdminOnline(status="Online"){
   if(currentUser && currentUser.uid === ADMIN_UID){
-    await setDoc(doc(db,"settings","adminStatus"),{status,lastOnline:serverTimestamp()},{merge:true});
+    await setDoc(doc(db,"settings","adminStatus"),{
+      status:status,
+      lastOnline:serverTimestamp()
+    },{merge:true});
   }
 }
 
 function listenAdminStatus(){
-  const statusText=document.getElementById("adminOnlineStatus");
-  if(!statusText) return;
-  if(unsubAdminStatus) unsubAdminStatus();
+  const statusEl = document.getElementById("adminOnlineStatus");
+  if(!statusEl) return;
 
-  unsubAdminStatus=onSnapshot(doc(db,"settings","adminStatus"),snap=>{
+  if(unsubscribeAdminStatus) unsubscribeAdminStatus();
+
+  unsubscribeAdminStatus = onSnapshot(doc(db,"settings","adminStatus"), snap=>{
     if(!snap.exists()){
-      statusText.innerText="Admin status: Offline";
+      statusEl.innerText = "Admin offline";
       return;
     }
-    const d=snap.data();
-    if(d.status==="Online"){
-      statusText.innerHTML=`<span class="status-dot"></span>Admin online`;
+
+    const data = snap.data();
+
+    if(data.status === "Online"){
+      statusEl.innerHTML = `<span class="status-dot"></span>Admin online`;
     }else{
-      statusText.innerText="Admin offline" + (d.lastOnline ? " • Last seen " + timeText(d.lastOnline) : "");
+      statusEl.innerText = "Admin offline" + (data.lastOnline ? " • Last seen " + timeText(data.lastOnline) : "");
     }
   });
 }
 
-window.sendMemberMessage=async function(){
-  const box=document.getElementById("memberMessage");
-  const status=document.getElementById("memberMessageStatus");
-  const msg=box.value.trim();
-  if(!msg){status.innerText="Please write a message first.";return;}
+window.sendMemberMessage = async function(){
+  const box = document.getElementById("memberMessage");
+  const msg = box.value.trim();
+
+  if(!msg){
+    alert("Please write a message first.");
+    return;
+  }
 
   await addDoc(collection(db,"messages"),{
-    uid:currentUser.uid,
-    email:currentUser.email,
-    message:msg,
-    reply:"",
-    status:"Open",
-    createdAt:serverTimestamp()
+    uid: currentUser.uid,
+    email: currentUser.email,
+    message: msg,
+    reply: "",
+    status: "Open",
+    createdAt: serverTimestamp()
   });
 
-  box.value="";
-  status.innerText="Message sent.";
+  box.value = "";
 }
 
 function listenMemberMessages(){
-  if(!currentUser) return;
-  const list=document.getElementById("memberMessageList");
-  if(!list) return;
-  if(unsubMemberMessages) unsubMemberMessages();
+  const list = document.getElementById("memberMessageList");
+  if(!list || !currentUser) return;
 
-  const q=query(collection(db,"messages"),where("uid","==",currentUser.uid),orderBy("createdAt","asc"));
-  unsubMemberMessages=onSnapshot(q,snap=>{
-    list.innerHTML="";
-    snap.forEach(s=>{
-      const d=s.data();
-      list.innerHTML+=`
+  if(unsubscribeMemberMessages) unsubscribeMemberMessages();
+
+  const q = query(
+    collection(db,"messages"),
+    where("uid","==",currentUser.uid),
+    orderBy("createdAt","asc")
+  );
+
+  unsubscribeMemberMessages = onSnapshot(q, snap=>{
+    list.innerHTML = "";
+
+    snap.forEach(docSnap=>{
+      const d = docSnap.data();
+
+      list.innerHTML += `
         <div class="bubble bubble-user">
           ${d.message || ""}
           <small>${timeText(d.createdAt)} • ${d.status || "Open"}</small>
         </div>
       `;
+
       if(d.reply){
-        list.innerHTML+=`
+        list.innerHTML += `
           <div class="bubble bubble-admin">
             ${d.reply}
             <small>Alpine Capital Partners • ${timeText(d.repliedAt)}</small>
@@ -475,26 +789,42 @@ function listenMemberMessages(){
         `;
       }
     });
-    list.scrollTop=list.scrollHeight;
+
+    list.scrollTop = list.scrollHeight;
   });
 }
 
 function listenAdminMessages(){
-  const list=document.getElementById("adminMessageList");
+  const list = document.getElementById("adminMessageList");
   if(!list) return;
-  if(unsubAdminMessages) unsubAdminMessages();
 
-  const q=query(collection(db,"messages"),orderBy("createdAt","desc"));
-  unsubAdminMessages=onSnapshot(q,snap=>{
-    list.innerHTML="";
-    snap.forEach(s=>{
-      const d=s.data();
-      const id=s.id;
-      list.innerHTML+=`
+  if(unsubscribeAdminMessages) unsubscribeAdminMessages();
+
+  const q = query(collection(db,"messages"),orderBy("createdAt","desc"));
+
+  unsubscribeAdminMessages = onSnapshot(q, snap=>{
+    list.innerHTML = "";
+
+    snap.forEach(docSnap=>{
+      const d = docSnap.data();
+      const id = docSnap.id;
+
+      list.innerHTML += `
         <div class="admin-message-card">
           <p><strong class="gold">${d.email || "Investor"}</strong></p>
-          <div class="bubble bubble-user" style="margin-left:0;">${d.message || ""}<small>${timeText(d.createdAt)}</small></div>
-          ${d.reply ? `<div class="bubble bubble-admin">${d.reply}<small>Replied ${timeText(d.repliedAt)}</small></div>` : ""}
+
+          <div class="bubble bubble-user" style="margin-left:0;">
+            ${d.message || ""}
+            <small>${timeText(d.createdAt)}</small>
+          </div>
+
+          ${d.reply ? `
+            <div class="bubble bubble-admin">
+              ${d.reply}
+              <small>Replied ${timeText(d.repliedAt)}</small>
+            </div>
+          ` : ""}
+
           <div class="reply-box">
             <textarea id="reply-${id}" placeholder="Write reply"></textarea>
             <button onclick="replyMessage('${id}')">Send Reply</button>
@@ -506,261 +836,139 @@ function listenAdminMessages(){
   });
 }
 
-window.replyMessage=async function(id){
-  const reply=document.getElementById("reply-"+id).value.trim();
-  if(!reply){alert("Write a reply first.");return;}
+window.replyMessage = async function(id){
+  const reply = document.getElementById("reply-"+id).value.trim();
+
+  if(!reply){
+    alert("Write a reply first.");
+    return;
+  }
 
   await updateDoc(doc(db,"messages",id),{
-    reply,
-    status:"Replied",
-    repliedAt:serverTimestamp()
+    reply: reply,
+    status: "Replied",
+    repliedAt: serverTimestamp()
   });
 }
 
-window.deleteMessage=async function(id){
+window.deleteMessage = async function(id){
   if(!confirm("Delete this message?")) return;
   await deleteDoc(doc(db,"messages",id));
 }
 
 async function loadInvestor(user){
-  currentUser=user;
+  currentUser = user;
+
   listenAdminStatus();
 
-  const snap=await getDoc(doc(db,"investors",user.uid));
+  const snap = await getDoc(doc(db,"investors",user.uid));
+
   if(!snap.exists()){
-    document.getElementById("loginMessage").innerText="Account exists, but investor profile is not approved yet.";
+    document.getElementById("loginMessage").innerText = "Account exists, but investor profile is not approved yet.";
     await signOut(auth);
     return;
   }
 
-  const d=snap.data();
-  if(d.status==="Pending"){
+  const data = snap.data();
+
+  if(data.status === "Pending"){
     alert("Your account is under review. Access will be granted once approved.");
     await signOut(auth);
     return;
   }
 
-  const kyc=d.kycStatus||"Not Submitted";
-  document.getElementById("loginBox").style.display="none";
-  document.getElementById("dashboard").style.display="block";
-  document.getElementById("adminPanel").style.display="none";
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
 
-  const ti=Number(d.totalInvestment||0), cv=Number(d.currentValue||0), tr=Number(d.totalReturns||0);
+  document.getElementById("welcomeName").innerText = "Welcome, " + (data.name || user.email);
+  document.getElementById("userEmail").innerText = user.email;
 
-  document.getElementById("welcomeName").innerText="Welcome, "+(d.name||user.email);
-  document.getElementById("userEmail").innerText=user.email;
-  document.getElementById("investorTier").innerText=d.tier||"Standard";
-  document.getElementById("totalInvestment").innerText=money(ti);
-  document.getElementById("currentValue").innerText=money(cv);
-  document.getElementById("totalReturns").innerText=money(tr);
-  document.getElementById("paymentDue").innerText=money(d.paymentDue);
-  document.getElementById("returnPercent").innerText=percent(ti>0?(tr/ti)*100:0);
-  document.getElementById("monthlyYield").innerText=percent(d.monthlyYield||0);
-  document.getElementById("kycStatus").innerText=kyc;
-  document.getElementById("investorNotes").innerText=d.notes||"No notes available.";
+  const totalInvestment = Number(data.totalInvestment || 0);
+  const currentValue = Number(data.currentValue || 0);
+  const totalReturns = Number(data.totalReturns || 0);
+  const monthlyYield = Number(data.monthlyYield || 0);
 
-  applyKycLock(kyc);
-  renderTransactions(d);
-  setupReport("report1",d.report1);
-  setupReport("report2",d.report2);
-  setupReport("report3",d.report3);
-  setupReport("report4",d.report4);
+  animateValue("totalInvestment",money(totalInvestment));
+  animateValue("currentValue",money(currentValue));
+  animateValue("totalReturns",money(totalReturns));
+  animateValue("monthlyYield",percent(monthlyYield));
+
   listenMemberMessages();
 
   if(chart) chart.destroy();
-  chart=new Chart(document.getElementById("growthChart"),{
+
+  chart = new Chart(document.getElementById("growthChart"),{
     type:"line",
-    data:{labels:["Total Investment","Current Value","Total Returns"],datasets:[{label:"Portfolio Overview",data:[ti,cv,tr],borderColor:"#d7a947",backgroundColor:"rgba(215,169,71,.18)",fill:true,tension:.35}]},
-    options:{plugins:{legend:{labels:{color:"#fff"}}},scales:{x:{ticks:{color:"#aaa"},grid:{color:"#222"}},y:{ticks:{color:"#aaa"},grid:{color:"#222"}}}}
+    data:{
+      labels:["Investment","Current Value","Returns"],
+      datasets:[{
+        label:"Portfolio Growth",
+        data:[totalInvestment,currentValue,totalReturns],
+        borderColor:"#d7a947",
+        backgroundColor:"rgba(215,169,71,.18)",
+        fill:true,
+        tension:.4
+      }]
+    },
+    options:{
+      animation:{duration:1800},
+      plugins:{legend:{labels:{color:"#fff"}}},
+      scales:{
+        x:{ticks:{color:"#aaa"},grid:{color:"#222"}},
+        y:{ticks:{color:"#aaa"},grid:{color:"#222"}}
+      }
+    }
   });
 
-  if(user.uid===ADMIN_UID){
-    document.getElementById("adminPanel").style.display="block";
-    document.querySelectorAll(".gated-section").forEach(el=>el.style.display="block");
-    document.getElementById("kycWarning").style.display="none";
-    updateAdminOnline("Online");
-    loadAdminPanel();
-    loadLeads();
+  if(user.uid === ADMIN_UID){
+    document.getElementById("adminPanel").style.display = "block";
+    await updateAdminOnline("Online");
     listenAdminMessages();
   }
 }
 
-async function loadAdminPanel(){
-  const list=document.getElementById("investorList");
-  list.innerHTML="";
-  const q=await getDocs(collection(db,"investors"));
-
-  q.forEach(s=>{
-    const d=s.data(), id=s.id;
-    list.innerHTML+=`
-      <div class="admin-card">
-        <h3 class="gold">${d.name||"Investor"}</h3>
-        <p>UID: ${id}</p>
-        <p>KYC: ${d.kycStatus||"Not Submitted"}</p>
-        ${d.passportUrl ? `<p><a class="gold" href="${d.passportUrl}" target="_blank">View Passport / ID</a></p>` : `<p>No passport uploaded</p>`}
-
-        <div class="admin-grid-four">
-          <div><label>Tier</label><input id="tier-${id}" value="${d.tier||'Standard'}"></div>
-          <div><label>Total Investment</label><input id="ti-${id}" value="${d.totalInvestment||0}"></div>
-          <div><label>Current Value</label><input id="cv-${id}" value="${d.currentValue||0}"></div>
-          <div><label>Total Returns</label><input id="tr-${id}" value="${d.totalReturns||0}"></div>
-        </div>
-
-        <div class="admin-grid">
-          <div><label>Payment Due</label><input id="pd-${id}" value="${d.paymentDue||0}"></div>
-          <div><label>Monthly Yield %</label><input id="my-${id}" value="${d.monthlyYield||0}"></div>
-          <div><label>KYC Status</label><input id="kyc-${id}" value="${d.kycStatus||'Not Submitted'}"></div>
-        </div>
-
-        <div class="admin-grid">
-          <div style="grid-column:span 3;"><label>Notes</label><input id="notes-${id}" value="${d.notes||''}"></div>
-        </div>
-
-        <button class="approve" onclick="quickKyc('${id}','Verified')">Approve KYC</button>
-        <button class="reject" onclick="quickKyc('${id}','Rejected')">Reject KYC</button>
-
-        <h3 class="gold" style="margin-top:30px;">Transaction Editor</h3>
-        ${[1,2,3,4].map(n=>`
-          <div class="admin-grid">
-            <div><label>Transaction ${n} Name</label><input id="t${n}n-${id}" value="${d['transaction'+n+'Name']||['Initial Capital Contribution','Monthly Return Distribution','Management Fee','Upcoming Payment Due'][n-1]}"></div>
-            <div><label>Amount</label><input id="t${n}a-${id}" value="${d['transaction'+n+'Amount']??[250000,3750,-750,5250][n-1]}"></div>
-            <div><label>Status</label><input id="t${n}s-${id}" value="${d['transaction'+n+'Status']||['Completed','Paid','Processed','Pending'][n-1]}"></div>
-          </div>
-        `).join("")}
-
-        <h3 class="gold" style="margin-top:30px;">Report Links</h3>
-        <div class="admin-grid-four">
-          <div><label>Investment Summary</label><input id="r1-${id}" value="${d.report1||''}"></div>
-          <div><label>Monthly Statement</label><input id="r2-${id}" value="${d.report2||''}"></div>
-          <div><label>Tax Report</label><input id="r3-${id}" value="${d.report3||''}"></div>
-          <div><label>Agreement / Terms</label><input id="r4-${id}" value="${d.report4||''}"></div>
-        </div>
-
-        <button onclick="saveInvestor('${id}')">Save Changes</button>
-      </div>
-    `;
-  });
-}
-
-async function loadLeads(){
-  const list=document.getElementById("leadList");
-  list.innerHTML="";
-  const q=await getDocs(query(collection(db,"leads"),orderBy("createdAt","desc")));
-
-  q.forEach(s=>{
-    const d=s.data();
-    list.innerHTML+=`
-      <div class="lead-row">
-        <span><strong class="gold">${d.name||"No Name"}</strong></span>
-        <span>Email: ${d.email||""}</span>
-        <span>Phone: ${d.phone||""}</span>
-        <span>Net Worth: ${d.netWorth||""}</span>
-        <span>Investment Amount: ${d.investmentAmount||""}</span>
-        <span>Risk Tolerance: ${d.riskTolerance||""}</span>
-        <span>Experience: ${d.experienceLevel||""}</span>
-        <span>Status: ${d.status||"New Application"}</span>
-        <span>Message: ${d.message||""}</span>
-
-        <button class="approve" onclick="approveLead('${s.id}')">Approve</button>
-        <button class="reject" onclick="rejectLead('${s.id}')">Reject</button>
-        <button class="danger" onclick="deleteLead('${s.id}')">Delete</button>
-      </div>
-    `;
-  });
-}
-
-window.quickKyc=async function(id,status){
-  await updateDoc(doc(db,"investors",id),{kycStatus:status});
-  alert("KYC status updated to "+status);
-  loadAdminPanel();
-}
-
-window.approveLead=async function(id){
-  await updateDoc(doc(db,"leads",id),{status:"Approved - Create investor login and request passport"});
-  alert("Lead approved. Next: create Firebase Auth user and investor profile.");
-  loadLeads();
-}
-
-window.rejectLead=async function(id){
-  await updateDoc(doc(db,"leads",id),{status:"Rejected"});
-  alert("Lead rejected");
-  loadLeads();
-}
-
-window.deleteLead=async function(id){
-  if(!confirm("Delete this lead permanently?")) return;
-  await deleteDoc(doc(db,"leads",id));
-  alert("Lead deleted");
-  loadLeads();
-}
-
-window.saveInvestor=async function(id){
-  const update={
-    tier:document.getElementById("tier-"+id).value,
-    totalInvestment:Number(document.getElementById("ti-"+id).value),
-    currentValue:Number(document.getElementById("cv-"+id).value),
-    totalReturns:Number(document.getElementById("tr-"+id).value),
-    paymentDue:Number(document.getElementById("pd-"+id).value),
-    monthlyYield:Number(document.getElementById("my-"+id).value),
-    kycStatus:document.getElementById("kyc-"+id).value,
-    notes:document.getElementById("notes-"+id).value,
-    report1:document.getElementById("r1-"+id).value,
-    report2:document.getElementById("r2-"+id).value,
-    report3:document.getElementById("r3-"+id).value,
-    report4:document.getElementById("r4-"+id).value
-  };
-
-  [1,2,3,4].forEach(n=>{
-    update["transaction"+n+"Name"]=document.getElementById(`t${n}n-${id}`).value;
-    update["transaction"+n+"Amount"]=Number(document.getElementById(`t${n}a-${id}`).value);
-    update["transaction"+n+"Status"]=document.getElementById(`t${n}s-${id}`).value;
-  });
-
-  await updateDoc(doc(db,"investors",id),update);
-  alert("Investor account updated successfully");
-}
-
-window.uploadPassport=async function(){
-  const file=document.getElementById("passportFile").files[0];
-
-  if(!file || !currentUser){
-    document.getElementById("passportStatus").innerText="Please select a JPG, PNG, or PDF file.";
-    return;
-  }
-
-  const allowedTypes=["image/jpeg","image/png","application/pdf"];
-  if(!allowedTypes.includes(file.type)){
-    document.getElementById("passportStatus").innerText="Only JPG, PNG, or PDF files are accepted.";
-    return;
-  }
-
-  document.getElementById("passportStatus").innerText="Uploading securely...";
+window.login = async function(){
+  document.getElementById("loginMessage").innerText = "";
 
   try{
-    const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
-    const fileRef=ref(storage,`kyc/${currentUser.uid}/${Date.now()}-${safeName}`);
+    const result = await signInWithEmailAndPassword(
+      auth,
+      document.getElementById("email").value,
+      document.getElementById("password").value
+    );
 
-    await uploadBytes(fileRef,file,{contentType:file.type});
-    const url=await getDownloadURL(fileRef);
+    loadInvestor(result.user);
 
-    await updateDoc(doc(db,"investors",currentUser.uid),{
-      passportUrl:url,
-      passportFileName:safeName,
-      passportFileType:file.type,
-      kycStatus:"Submitted - Under Review",
-      kycSubmittedAt:serverTimestamp()
-    });
-
-    document.getElementById("passportStatus").innerText="Submitted successfully. Review may take 3–5 business days.";
-    document.getElementById("kycStatus").innerText="Submitted - Under Review";
   }catch(error){
-    document.getElementById("passportStatus").innerText="Upload failed. Please try again.";
-    console.error(error);
+    document.getElementById("loginMessage").innerText = "Access denied. Check email/password.";
   }
 }
 
-window.submitLead=async function(){
-  document.getElementById("leadStatus").innerText="Sending application...";
+window.logout = async function(){
+  await updateAdminOnline("Offline");
+
+  if(unsubscribeMemberMessages) unsubscribeMemberMessages();
+  if(unsubscribeAdminMessages) unsubscribeAdminMessages();
+  if(unsubscribeAdminStatus) unsubscribeAdminStatus();
+
+  await signOut(auth);
+
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("loginBox").style.display = "block";
+  document.getElementById("adminPanel").style.display = "none";
+}
+
+window.addEventListener("beforeunload",()=>{
+  if(currentUser && currentUser.uid === ADMIN_UID){
+    setDoc(doc(db,"settings","adminStatus"),{
+      status:"Offline",
+      lastOnline:serverTimestamp()
+    },{merge:true});
+  }
+});
+
+window.submitLead = async function(){
+  document.getElementById("leadStatus").innerText = "Sending application...";
 
   try{
     await addDoc(collection(db,"leads"),{
@@ -776,59 +984,30 @@ window.submitLead=async function(){
       createdAt:serverTimestamp()
     });
 
-    document.getElementById("leadStatus").innerText="Application submitted successfully.";
-    ["leadName","leadEmail","leadPhone","leadInvestment","leadMessage"].forEach(id=>document.getElementById(id).value="");
-    document.getElementById("leadNetWorth").value="";
-    document.getElementById("leadRisk").value="";
-    document.getElementById("leadExperience").value="";
-  }catch(e){
-    document.getElementById("leadStatus").innerText="Application failed. Check Firestore rules.";
+    document.getElementById("leadStatus").innerText = "Application submitted successfully.";
+  }catch(error){
+    document.getElementById("leadStatus").innerText = "Application failed. Check Firestore rules.";
   }
-}
-
-window.login=async function(){
-  document.getElementById("loginMessage").innerText="";
-  try{
-    await signInWithEmailAndPassword(auth,document.getElementById("email").value,document.getElementById("password").value);
-  }catch{
-    document.getElementById("loginMessage").innerText="Access denied. Check email/password.";
-  }
-}
-
-window.logout=async function(){
-  await updateAdminOnline("Offline");
-  await signOut(auth);
-  if(unsubMemberMessages) unsubMemberMessages();
-  if(unsubAdminMessages) unsubAdminMessages();
-  if(unsubAdminStatus) unsubAdminStatus();
-  document.getElementById("dashboard").style.display="none";
-  document.getElementById("loginBox").style.display="block";
-  document.getElementById("adminPanel").style.display="none";
 }
 
 onAuthStateChanged(auth,user=>{
-  if(user)loadInvestor(user);
-  else{
-    document.getElementById("dashboard").style.display="none";
-    document.getElementById("loginBox").style.display="block";
-    document.getElementById("adminPanel").style.display="none";
+  if(user){
+    loadInvestor(user);
+  }else{
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("loginBox").style.display = "block";
   }
 });
 
-window.addEventListener("beforeunload",()=>{
-  if(currentUser && currentUser.uid===ADMIN_UID){
-    setDoc(doc(db,"settings","adminStatus"),{status:"Offline",lastOnline:serverTimestamp()},{merge:true});
-  }
-});
-
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.classList.add("show");
-      observer.unobserve(e.target);
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
+      observer.unobserve(entry.target);
     }
   });
 },{threshold:.2});
+
 document.querySelectorAll(".fade").forEach(el=>observer.observe(el));
 </script>
 
