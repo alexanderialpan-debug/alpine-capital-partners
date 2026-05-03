@@ -238,7 +238,17 @@ header{padding:0 22px}
       <h2>Investor Notes</h2>
       <p id="investorNotes">No notes available.</p>
     </div>
+<div class="message-box">
+  <h2>Contact Alpine Capital Partners</h2>
+  <p id="adminOnlineStatus">Admin status: Checking...</p>
 
+  <textarea id="memberMessage" placeholder="Write your message to admin"></textarea>
+  <button onclick="sendMemberMessage()">Send Message</button>
+  <p id="memberMessageStatus"></p>
+
+  <h3 style="margin-top:30px;" class="gold">Conversation History</h3>
+  <div id="memberMessageList"></div>
+</div>
     <div class="kyc-box">
       <h2>Identity Verification</h2>
       <p>Please upload a clear passport or identity document. JPG, PNG, or PDF only. Review may take 3–5 business days.</p>
