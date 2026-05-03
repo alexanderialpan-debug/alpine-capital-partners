@@ -362,21 +362,58 @@ textarea{min-height:120px}
 }
 .gated-section{display:none}
 
-.founder{
+<!-- FOUNDERS -->
+<section class="founder fade">
+  <img src="ceo.jpg.png">
+  <div>
+    <p class="small">Founder & CEO</p>
+    <h2>Alexander Alpan</h2>
+    <p>Building a disciplined investment platform focused on long-term growth, structure, and execution.</p>
+    <p class="gold">“Creating long-term wealth through real assets, strong structure, and consistent execution.”</p>
+  </div>
+</section>
+
+<section class="partner fade">
+  <div>
+    <p class="small">Co-Founder & COO</p>
+    <h2>Fuat Dikmucli</h2>
+    <p>Driving operational execution, deal coordination, and internal performance across Alpine Capital Partners to ensure disciplined delivery at every level.</p>
+    <p class="gold">“Precision in execution and operational discipline are the foundation of sustainable growth.”</p>
+  </div>
+  <img src="fuat.jpg">
+</section>
+.partner{
   display:grid;
-  grid-template-columns:45% 55%;
-  background:linear-gradient(135deg,#050505,#101010);
-  border-top:1px solid rgba(215,169,71,.35);
+  grid-template-columns:55% 45%;
+  background:linear-gradient(135deg,#070707,#101010);
+  border-top:1px solid rgba(255,255,255,.08);
 }
-.founder img{
+
+.partner img{
   width:100%;
   height:680px;
   object-fit:cover;
-  object-position:center top;
+  object-position:center center;
 }
-.founder div{padding:112px 92px}
-.founder h2{font-size:62px;margin:20px 0}
 
+.partner div{
+  padding:112px 92px;
+}
+
+.partner h2{
+  font-size:62px;
+  margin:20px 0;
+}
+
+@media(max-width:900px){
+  .partner{
+    grid-template-columns:1fr;
+  }
+
+  .partner div{
+    padding:65px 28px;
+  }
+}
 .contact{
   padding:105px 82px;
   text-align:center;
