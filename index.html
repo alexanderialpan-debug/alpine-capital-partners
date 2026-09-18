@@ -1,1 +1,246 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Website Unavailable</title> <style> * { margin: 0; padding: 0; box-sizing: border-box; } body { background-color: #111111; color: #ffffff; font-family: Arial, Helvetica, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; text-align: center; padding: 20px; } .container { max-width: 700px; padding: 50px; border: 2px solid #D4AF37; border-radius: 15px; background-color: #1a1a1a; box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); } h1 { color: #D4AF37; font-size: 56px; margin-bottom: 20px; font-weight: bold; } h2 { color: #ffffff; font-size: 28px; margin-bottom: 25px; font-weight: normal; } p { color: #cccccc; font-size: 18px; line-height: 1.7; margin-bottom: 15px; } .footer { margin-top: 30px; color: #999999; font-size: 14px; } @media (max-width: 768px) { h1 { font-size: 42px; } h2 { font-size: 22px; } p { font-size: 16px; } .container { padding: 35px 25px; } } </style> </head> <body> <div class="container"> <h1>Sorry!</h1> <h2>Website Currently Unavailable</h2> <p> We apologize for the inconvenience. </p> <p> This website is currently unavailable and may be under maintenance or no longer in service. </p> <p> Please check back again at a later time. </p> <div class="footer"> Thank you for your understanding. </div> </div> </body> </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Alpine Investor Portal</title>
+
+<!-- APP INSTALL -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#d7a947">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Alpine Capital">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- ICONS -->
+<link rel="icon" href="favicon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<!-- FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:Inter;
+  background:radial-gradient(circle at top,#17120a,#050505 40%,#000);
+  color:white;
+}
+
+.app{
+  max-width:520px;
+  margin:auto;
+  padding:20px;
+}
+
+.logo{text-align:center;margin:20px 0}
+.logo img{height:80px}
+
+.card{
+  background:#0b0b0b;
+  border:1px solid rgba(215,169,71,.3);
+  padding:20px;
+  margin:15px 0;
+  border-radius:20px;
+}
+
+input,textarea{
+  width:100%;
+  padding:14px;
+  margin:8px 0;
+  background:#050505;
+  border:1px solid #333;
+  color:white;
+  border-radius:12px;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  background:linear-gradient(135deg,#f4df9a,#d7a947);
+  border:0;
+  color:black;
+  font-weight:900;
+  border-radius:12px;
+}
+
+.dashboard{display:none}
+
+.stat{
+  margin-top:10px;
+}
+
+.chat{
+  height:300px;
+  overflow:auto;
+  background:#050505;
+  padding:10px;
+  border-radius:12px;
+  margin-top:10px;
+}
+
+.bubble{
+  padding:10px;
+  margin:6px 0;
+  border-radius:12px;
+}
+
+.user{background:gold;color:black;text-align:right}
+.admin{background:#222}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="logo">
+<img src="logo.png">
+</div>
+
+<!-- LOGIN -->
+<div id="loginBox" class="card">
+<h2>Investor Login</h2>
+
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<p id="loginMessage"></p>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="dashboard">
+
+<div class="card">
+<h2 id="welcomeName">Welcome</h2>
+<p id="userEmail"></p>
+
+<div class="stat">Investment: <strong id="totalInvestment">$0</strong></div>
+<div class="stat">Value: <strong id="currentValue">$0</strong></div>
+<div class="stat">Returns: <strong id="totalReturns">$0</strong></div>
+<div class="stat">KYC: <strong id="kycStatus">Pending</strong></div>
+</div>
+
+<div class="card">
+<canvas id="chart"></canvas>
+</div>
+
+<div class="card">
+<h3>Chat</h3>
+
+<div id="chat" class="chat"></div>
+
+<textarea id="msg" placeholder="Write message"></textarea>
+<button onclick="send()">Send</button>
+</div>
+
+<button onclick="logout()">Logout</button>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, collection, addDoc, query, where, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyDplPf7cJQ9wK7FHM2NGexjNQegH1IPYHk",
+authDomain: "alpine-capital-partners.firebaseapp.com",
+projectId: "alpine-capital-partners"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentUser;
+
+window.login = async function(){
+try{
+const res = await signInWithEmailAndPassword(auth,email.value,password.value);
+currentUser = res.user;
+
+loginBox.style.display="none";
+dashboard.style.display="block";
+
+userEmail.innerText=currentUser.email;
+
+loadData();
+loadChat();
+
+}catch{
+loginMessage.innerText="Login failed";
+}
+}
+
+async function loadData(){
+const snap = await getDoc(doc(db,"investors",currentUser.uid));
+if(!snap.exists()) return;
+
+const d = snap.data();
+
+totalInvestment.innerText="$"+d.totalInvestment;
+currentValue.innerText="$"+d.currentValue;
+totalReturns.innerText="$"+d.totalReturns;
+kycStatus.innerText=d.kycStatus;
+
+new Chart(chart,{
+type:"bar",
+data:{
+labels:["Investment","Returns"],
+datasets:[{data:[d.totalInvestment,d.totalReturns]}]
+}
+});
+}
+
+window.send = async function(){
+await addDoc(collection(db,"messages"),{
+uid:currentUser.uid,
+text:msg.value,
+createdAt:serverTimestamp()
+});
+msg.value="";
+}
+
+function loadChat(){
+const q = query(collection(db,"messages"),where("uid","==",currentUser.uid));
+
+onSnapshot(q,snap=>{
+chat.innerHTML="";
+snap.forEach(doc=>{
+const d=doc.data();
+
+chat.innerHTML+=`
+<div class="bubble user">${d.text}</div>
+`;
+});
+});
+}
+
+window.logout = async function(){
+await signOut(auth);
+dashboard.style.display="none";
+loginBox.style.display="block";
+}
+
+</script>
+
+<!-- SERVICE WORKER -->
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/service-worker.js");
+}
+</script>
+
+</body>
+</html>
